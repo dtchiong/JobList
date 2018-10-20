@@ -6,6 +6,23 @@ const filebuffer = fs.readFileSync("db/usda-nnd.sqlite3");
 
 const db = new sqlite.Database(filebuffer);
 
+const { Client } = require('pg');
+
+const client = new Client({
+  connectionString: "postgres://gadfpojzmdpvss:3c5b908ba909e2f9936a06244abaf3fd5134245c752b0983858c51d4d52b681a@ec2-184-72-234-230.compute-1.amazonaws.com:5432/df7qd4fs7bgiv3?ssl=true",
+  ssl: true
+});
+
+client.connect();
+
+client.query('SELECT * FROM users;', (err, res) => {
+  if (err) throw err;
+  for (let row of res.rows) {
+    console.log(JSON.stringify(row));
+  }
+  client.end();
+});
+
 const app = express();
 
 app.set("port", process.env.PORT || 3001);
@@ -24,6 +41,21 @@ const COLUMNS = [
   "kcal",
   "description"
 ];
+
+app.get('/db', async (req, res) => {
+  //console.log(Pool.connectionString);
+  try {
+    const client = await pool.connect()
+    const result = await client.query('SELECT * FROM users');
+    //const results = { 'results': (result) ? result.rows : null};
+    //res.render('pages/db', results );
+    client.release();
+  } catch (err) {
+    console.error(err);
+    res.send("Error " + err);
+  }
+});
+
 app.get("/api/food", (req, res) => { //request, response?
   
   const param = req.query.q;

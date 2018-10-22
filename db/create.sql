@@ -1,5 +1,5 @@
-DROP TABLE users;
-DROP TABLE lists;
+DROP TABLE users CASCADE;
+DROP TABLE lists CASCADE;
 
 CREATE TABLE users (
     PRIMARY KEY (user_id),

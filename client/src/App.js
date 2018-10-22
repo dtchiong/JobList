@@ -3,9 +3,6 @@ import SelectedFoods from "./SelectedFoods";
 import FoodSearch from "./FoodSearch";
 import {  Navbar, Button } from 'react-bootstrap';
 
-//const auth = new Auth();
-//auth.login();
-
 class App extends Component {
   
   goTo(route) {

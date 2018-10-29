@@ -39,6 +39,8 @@ export default class Auth {
         localStorage.setItem('access_token', authResult.accessToken);
         localStorage.setItem('id_token', authResult.idToken);
         localStorage.setItem('expires_at', expiresAt);
+        
+        console.log("sub: "+authResult.idTokenPayload.sub);
         // navigate to the home route
         history.replace('/home');
     }

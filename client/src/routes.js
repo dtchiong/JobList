@@ -8,6 +8,7 @@ import history from "./history";
 
 const auth = new Auth();
 
+//Q: Why are there brackets around location?
 const handleAuthentication = ({ location }) => {
   if (/access_token|id_token|error/.test(location.hash)) {
     auth.handleAuthentication();

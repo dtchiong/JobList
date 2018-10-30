@@ -12,6 +12,7 @@ class LoginControl extends Component {
 
   logout() {
     this.props.auth.logout();
+    this.props.clearUserId();
   }
 
   //Router passes auth to App which passes auth to LoginControl

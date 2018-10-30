@@ -14,6 +14,8 @@ export default class Auth {
         this.auth0.authorize();
     }
 
+    userId = null;
+
     constructor() {
         this.login = this.login.bind(this);
         this.logout = this.logout.bind(this);
@@ -40,9 +42,22 @@ export default class Auth {
         localStorage.setItem('id_token', authResult.idToken);
         localStorage.setItem('expires_at', expiresAt);
         
-        console.log("sub: "+authResult.idTokenPayload.sub);
+        this.userId = authResult.idTokenPayload.sub;
+        //console.log("sub: "+this.userId);
+
         // navigate to the home route
         history.replace('/home');
+    }
+
+    //uses the access token from local storage to get the user profile of the authenticated user
+    getUserProfile(callback) {
+        console.log("getUserProfile()");
+        let access_token = localStorage.getItem('access_token');
+        if (access_token == null) {
+            console.log("Err: Access token is null");
+            return null;
+        }
+        this.auth0.client.userInfo(access_token, callback);
     }
 
     logout() {

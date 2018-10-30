@@ -49,6 +49,11 @@ const COLUMNS = [
   "description"
 ];
 
+app.get('/api/user/new', async (req, res) => {
+  console.log("inside server: ");
+  return "4Head";
+});
+
 app.get('/users', async (req, res) => {
   try {
     const result = await client.query('SELECT * FROM users');

@@ -22,7 +22,7 @@ if (process.env.NODE_ENV === "production") {
 }else { 
   connURL = fs.readFileSync("pg-cred.txt", "utf8");
 }
-
+/*
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
 
 app.get('/*', (req, res) => {
@@ -32,7 +32,7 @@ app.get('/*', (req, res) => {
   console.log(res)
   res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
 });
-
+*/
 //Initialize client and connect to Heroku DB
 const client = new Client({
    connectionString: connURL,

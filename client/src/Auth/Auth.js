@@ -42,21 +42,20 @@ export default class Auth {
         localStorage.setItem('id_token', authResult.idToken);
         localStorage.setItem('expires_at', expiresAt);
         
-        this.userId = authResult.idTokenPayload.sub;
-        //console.log("sub: "+this.userId);
-
+        this.doSetUserProfile(authResult.idTokenPayload.sub);
         // navigate to the home route
         history.replace('/home');
     }
 
-    //uses the access token from local storage to get the user profile of the authenticated user
+    /* Uses the access token from local storage to get the user profile of the authenticated user */
     getUserProfile(callback) {
-        console.log("getUserProfile()");
         let access_token = localStorage.getItem('access_token');
+        
         if (access_token == null) {
-            console.log("Err: Access token is null");
-            return null;
+            callback("Access token is null", null);
+            return;
         }
+        
         this.auth0.client.userInfo(access_token, callback);
     }
 

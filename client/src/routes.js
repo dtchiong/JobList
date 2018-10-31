@@ -15,6 +15,7 @@ const handleAuthentication = ({ location }) => {
   }
 };
 
+//remember how exact path later
 const makeMainRoutes = () => {
   return (
     <Router history={history}> 

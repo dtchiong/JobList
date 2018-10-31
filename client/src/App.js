@@ -8,10 +8,10 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    console.log(this.props);
-    console.log("before setting func: "+this.props.auth.setUserProfile);
-    this.props.auth.setUserProfile = this.setUserProfile;
-    console.log("after setting func: "+this.props.auth.setUserProfile);
+    this.doSetUserProfile = this.doSetUserProfile.bind(this);
+    this.setUserProfile = this.setUserProfile.bind(this);
+    
+    this.props.auth.doSetUserProfile = this.doSetUserProfile;
   }
 
   state = {
@@ -19,8 +19,8 @@ class App extends Component {
     userId: null
   };
 
+  //Used to set the user profile when the tab is refreshed
   componentDidMount() {
-    console.log("MOUNTED");
     this.props.auth.getUserProfile(this.setUserProfile);
   }
   
@@ -36,23 +36,31 @@ class App extends Component {
     this.setState({ selectedFoods: newFoods });
   };
 
+  /* This is the callback for the auth0's getUserProfile()
+   * If there's an error, meaning the access token is incorrect, then we log out,
+   * else we call the helper function to set the profile
+   */
   setUserProfile = (err, user) => {
-    console.log("******** setUserProfile() *********");
-    console.log("err: "+err);
-    console.log("user: "+JSON.stringify(user));
-    console.log("this: "+this);
-    this.setState({userId: JSON.stringify(user)});
-    console.log("***********************************");
+    if (err) {
+      this.child.logout();
+      return;
+    }
+    this.doSetUserProfile(user);
   }
 
+  doSetUserProfile = (user) => {
+    this.setState({userId: user.sub});
+  }
+
+  /* Passed as prop to LoginControl to be used when logging out */
   clearUserId = () => {
     this.setState({userId: null});
   }
   
   render() {
-    console.log("render() - userid: " + this.state.userId);
+    console.log("render() -\n  userid: " + this.state.userId);
 
-    const { selectedFoods } = this.state;
+    const { selectedFoods } = this.state; //Q: Why are there brackets here around selectedFoods?
 
     return (
       <div className="App">
@@ -64,6 +72,7 @@ class App extends Component {
           <FoodSearch onFoodClick={this.addFood} />
 
           <LoginControl 
+            onRef={ref => (this.child = ref)}
             history={this.props.history}
             auth={this.props.auth}
             setUserProfile={this.setUserProfile}

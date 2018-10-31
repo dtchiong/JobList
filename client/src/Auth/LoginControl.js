@@ -2,6 +2,15 @@ import React, { Component } from "react";
 import { Navbar, Button } from "react-bootstrap";
 
 class LoginControl extends Component {
+  
+  componentDidMount() {
+    this.props.onRef(this)
+  }
+
+  componentWillUnmount() {
+    this.props.onRef(undefined)
+  }
+  
   goTo(route) {
     this.props.history.replace(`/${route}`);
   }

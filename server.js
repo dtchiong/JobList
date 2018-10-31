@@ -19,6 +19,7 @@ app.set("port", process.env.PORT || 3001);
 //we use the static connetion string to connect to the DB if not on production
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
+  console.log("In Production");
 }else { 
   connURL = fs.readFileSync("pg-cred.txt", "utf8");
 }

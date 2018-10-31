@@ -5,11 +5,11 @@ export default class Auth {
     auth0 = new auth0.WebAuth({
         domain: 'restless-wave-6342.auth0.com',
         clientID: 'TBsCF5yXo62R4yGknsy6eq6PHLc3iuEm',
-        redirectUri: 'http://localhost:3000/callback',
+        redirectUri: (1===2)? 'http://localhost:3000/callback' : 'https://www.google.com/',
         responseType: 'token id_token',
         scope: 'openid'
     });
-
+    
     login() {
         this.auth0.authorize();
     }

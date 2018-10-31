@@ -5,7 +5,7 @@ export default class Auth {
     auth0 = new auth0.WebAuth({
         domain: 'restless-wave-6342.auth0.com',
         clientID: 'TBsCF5yXo62R4yGknsy6eq6PHLc3iuEm',
-        redirectUri: (1===2)? 'http://localhost:3000/callback' : 'https://www.google.com/',
+        redirectUri: (process.env.NODE_ENV === "production")? 'https://job-logger.herokuapp.com/callback' : 'http://localhost:3000/callback',
         responseType: 'token id_token',
         scope: 'openid'
     });
@@ -14,9 +14,9 @@ export default class Auth {
         this.auth0.authorize();
     }
 
-    userId = null;
-
     constructor() {
+        console.log("process: " + JSON.stringify(process.env));
+
         this.login = this.login.bind(this);
         this.logout = this.logout.bind(this);
         this.handleAuthentication = this.handleAuthentication.bind(this);

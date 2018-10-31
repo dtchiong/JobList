@@ -1,39 +1,30 @@
 const express = require("express");
 const fs = require("fs");
 const sqlite = require("sql.js");
+const path = require('path');
+
 
 const filebuffer = fs.readFileSync("db/usda-nnd.sqlite3");
-
 const db = new sqlite.Database(filebuffer);
 
 const { Client } = require('pg');
-
 var connURL = process.env.DATBASE_URL;
 
-const app = express();
 
-app.set("port", process.env.PORT || 3001);
+const app = express();
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 //Express only serves static assets in production
 //Since procoess.env.DATABASE_URL isn't usage in dev, 
 //we use the static connetion string to connect to the DB if not on production
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
+  //app.use(express.static("client/build"));
   console.log("In Production");
-}else { 
+}else {
+  console.log("In dev build"); 
   connURL = fs.readFileSync("pg-cred.txt", "utf8");
 }
-/*
-app.use(express.static(path.resolve(__dirname, '..', 'build')));
 
-app.get('/*', (req, res) => {
-
-  console.log('hi from app.get')
-  console.log(req)
-  console.log(res)
-  res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
-});
-*/
 //Initialize client and connect to Heroku DB
 const client = new Client({
    connectionString: connURL,
@@ -133,6 +124,13 @@ app.get("/api/food", (req, res) => { //request, response?
     res.json([]);
   }
 });
+
+// Handles any requests that don't match the ones above
+app.get('*', (req,res) =>{
+  res.sendFile(path.join(__dirname+'/client/build/index.html'));
+});
+
+app.set("port", process.env.PORT || 3001);
 
 app.listen(app.get("port"), () => {
   console.log(`Find the server at: http://localhost:${app.get("port")}/`); // eslint-disable-line no-console

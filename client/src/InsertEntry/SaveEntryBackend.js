@@ -1,30 +1,19 @@
 /* eslint-disable no-undef */
-/*
-function search(query, cb) {
-  console.log(query);
 
-  return fetch(`api/food?q=${query}`, {
-    accept: "application/json"
-  })
-    .then(checkStatus)
-    .then(parseJSON)
-    .then(cb);
+/*
+function insertUserIfNew(userId) {
+  res = checkIfUserExists(userId);
 }
 */
-function print(string) {
-  alert(string);
-}
 
 function checkIfUserExists(userId) {
   console.log("checkIfUserExists()");
 
-  let obj = {data1: 1, data2: 2};
-
-  console.log(obj);
+  let data = {userId: userId};
 
   return fetch(`api/user/exists`, {
     method: "POST",
-    body: JSON.stringify(obj),
+    body: JSON.stringify(data),
     headers: {
       'Content-Type': 'application/json'
     }
@@ -33,14 +22,23 @@ function checkIfUserExists(userId) {
     .then(res => console.log(res));
 }
 
-function insertNewUser(userId) {
-  console.log("insert users");
+/*
+function insertUser(userId) {
+  console.log("insertUser()");
 
-  return fetch(`api/user/new`, {
+  let data = {userId: userId};
+
+  return fetch(`api/user/insert`, {
     method: "POST",
-    body: { userId }
-  }).then(res => console.log(res));
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }).then(checkStatus)
+    .then(parseJSON)
+    .then(res => console.log(res));
 }
+*/
 
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
@@ -54,6 +52,7 @@ function checkStatus(response) {
 }
 
 function parseJSON(response) {
+  console.log("PARSING JSON");
   return response.json();
 }
 

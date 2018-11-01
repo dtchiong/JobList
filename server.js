@@ -67,13 +67,27 @@ app.get('/api/user/new', async (req, res) => {
   return "4Head";
 });
 */
-app.post('/api/user/exists', async (req, res) => {
-  //console.log("bodyParser: "+JSON.parse(req.body));
-  console.log("req "+JSON.stringify(req.body));
-  console.log("body1: "+req.body.data1);
-  //console.log()
+const queryGetUser = "SELECT * FROM users WHERE user_id = $1";
+const queryInsertUser = "INSERT INTO users VALUES ($1)";
 
-  res.json({response: "4Head"});
+app.post('/api/user/exists', async (req, res) => {
+  console.log("req "+JSON.stringify(req.body));
+  const values = [req.body.userId];
+  try {
+    const result = await client.query(queryGetUser, values);
+    console.log("Success");
+    console.log(result.rows[0]);
+    if (result.rows[0]) {
+      console.log("got rows");
+      res.json(result.rows[0]);
+    }else {
+      console.log("no rows");
+      res.json([]);
+    }
+  }catch(err) {
+    console.log(err);
+    res.send(err);
+  }
 });
 
 app.get('/users', async (req, res) => {

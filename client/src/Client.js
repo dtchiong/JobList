@@ -23,17 +23,6 @@ function checkStatus(response) {
   throw error;
 }
 
-/*
-function insertUser(user) {
-  console.log("insert users");
-
-  return fetch(`api/user/new`, {
-    method: 'POST',
-    body: {user}
-  })
-    .then(res => console.log(res));
-}
-*/
 function parseJSON(response) {
   return response.json();
 }

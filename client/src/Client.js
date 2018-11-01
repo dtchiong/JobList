@@ -11,6 +11,8 @@ function search(query, cb) {
 }
 
 function checkStatus(response) {
+  console.log("checkStatus response: "+JSON.stringify(response));
+  
   if (response.status >= 200 && response.status < 300) {
     return response;
   }

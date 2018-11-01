@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import SelectedFoods from "./SelectedFoods";
 import FoodSearch from "./FoodSearch";
 import LoginControl from "./Auth/LoginControl";
+import SaveEntryButton from "./InsertEntry/SaveEntryButton";
 
 class App extends Component {
 
@@ -77,6 +78,10 @@ class App extends Component {
             auth={this.props.auth}
             setUserProfile={this.setUserProfile}
             clearUserId={this.clearUserId}
+          />
+
+          <SaveEntryButton
+            
           />
         </div>
       </div>

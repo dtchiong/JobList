@@ -1,4 +1,5 @@
 const express = require("express");
+var bodyParser = require("body-parser"); //so we can do console.log(req.body) in POST
 const fs = require("fs");
 const sqlite = require("sql.js");
 const path = require('path');
@@ -10,9 +11,19 @@ const db = new sqlite.Database(filebuffer);
 const { Client } = require('pg');
 var connURL = process.env.DATBASE_URL;
 
-
 const app = express();
+
 app.use(express.static(path.join(__dirname, 'client/build')));
+
+app.use(bodyParser.urlencoded({extended: false}));
+// parse application/json
+app.use(bodyParser.json());
+
+app.set("port", process.env.PORT || 3001);
+
+app.listen(app.get("port"), () => {
+  console.log(`Find the server at: http://localhost:${app.get("port")}/`); // eslint-disable-line no-console
+});
 
 //Express only serves static assets in production
 //Since procoess.env.DATABASE_URL isn't usage in dev, 
@@ -50,10 +61,19 @@ const COLUMNS = [
   "kcal",
   "description"
 ];
-
+/*
 app.get('/api/user/new', async (req, res) => {
   console.log("inside server: ");
   return "4Head";
+});
+*/
+app.post('/api/user/exists', async (req, res) => {
+  //console.log("bodyParser: "+JSON.parse(req.body));
+  console.log("req "+JSON.stringify(req.body));
+  console.log("body1: "+req.body.data1);
+  //console.log()
+
+  res.json({response: "4Head"});
 });
 
 app.get('/users', async (req, res) => {
@@ -128,10 +148,4 @@ app.get("/api/food", (req, res) => { //request, response?
 // Handles any requests that don't match the ones above
 app.get('*', (req,res) =>{
   res.sendFile(path.join(__dirname+'/client/build/index.html'));
-});
-
-app.set("port", process.env.PORT || 3001);
-
-app.listen(app.get("port"), () => {
-  console.log(`Find the server at: http://localhost:${app.get("port")}/`); // eslint-disable-line no-console
 });

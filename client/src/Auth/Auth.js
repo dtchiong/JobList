@@ -42,7 +42,7 @@ export default class Auth {
         localStorage.setItem('id_token', authResult.idToken);
         localStorage.setItem('expires_at', expiresAt);
         
-        this.doSetUserProfile(authResult.idTokenPayload.sub);
+        this.doSetUserProfile(authResult.idTokenPayload);
         // navigate to the home route
         history.replace('/home');
     }

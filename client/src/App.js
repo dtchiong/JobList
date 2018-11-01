@@ -43,6 +43,7 @@ class App extends Component {
    */
   setUserProfile = (err, user) => {
     if (err) {
+      //console.log("setUserProfile: "+err);
       this.child.logout();
       return;
     }

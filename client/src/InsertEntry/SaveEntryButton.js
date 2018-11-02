@@ -8,7 +8,7 @@ class SaveEntryButton extends Component {
       <div>
         <Button 
         bsStyle="primary" 
-        onClick={()=>{SaveEntryBackend.userExists("1")}}>
+        onClick={()=>{SaveEntryBackend.insertUserIfNew("1")}}>
           Backend Test
         </Button>
       </div>

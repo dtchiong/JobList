@@ -1,14 +1,11 @@
 /* eslint-disable no-undef */
 
-/*
-function insertUserIfNew(userId) {
-  res = userExists(userId);
+async function insertUserIfNew(userId) {
+  const res = await userExists(userId);
+  console.log(res);
 }
-*/
 
 function userExists(userId) {
-  console.log("userExists()");
-
   let data = { userId: userId };
 
   return fetch(`api/user/exists`, {
@@ -21,15 +18,10 @@ function userExists(userId) {
     .then(checkStatus)
     .then(parseJSON)
     .then(res => {
-      console.log("hi");
-      console.log(res);
-      console.log(res.length);
-      if (res === []) {
-        console.log("user doesn't exist");
-        return false;
-      }else {
-        console.log("user exists");
+      if (res.users.length > 0) {
         return true;
+      }else if (res.users.length === 0) {
+        return false;
       }
     });
 }
@@ -64,9 +56,8 @@ function checkStatus(response) {
 }
 
 function parseJSON(response) {
-  console.log("PARSING JSON");
   return response.json();
 }
 
-const SaveEntryBackend = { userExists };
+const SaveEntryBackend = { insertUserIfNew };
 export default SaveEntryBackend;

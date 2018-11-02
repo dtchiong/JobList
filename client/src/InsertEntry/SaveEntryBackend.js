@@ -2,24 +2,36 @@
 
 /*
 function insertUserIfNew(userId) {
-  res = checkIfUserExists(userId);
+  res = userExists(userId);
 }
 */
 
-function checkIfUserExists(userId) {
-  console.log("checkIfUserExists()");
+function userExists(userId) {
+  console.log("userExists()");
 
-  let data = {userId: userId};
+  let data = { userId: userId };
 
   return fetch(`api/user/exists`, {
     method: "POST",
     body: JSON.stringify(data),
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json"
     }
-  }).then(checkStatus)
+  })
+    .then(checkStatus)
     .then(parseJSON)
-    .then(res => console.log(res));
+    .then(res => {
+      console.log("hi");
+      console.log(res);
+      console.log(res.length);
+      if (res === []) {
+        console.log("user doesn't exist");
+        return false;
+      }else {
+        console.log("user exists");
+        return true;
+      }
+    });
 }
 
 /*
@@ -56,5 +68,5 @@ function parseJSON(response) {
   return response.json();
 }
 
-const SaveEntryBackend = { checkIfUserExists };
+const SaveEntryBackend = { userExists };
 export default SaveEntryBackend;

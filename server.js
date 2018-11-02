@@ -61,47 +61,54 @@ const COLUMNS = [
   "kcal",
   "description"
 ];
+
+const queryGetUser = "SELECT * FROM users WHERE user_id = $1";
+const queryInsertUser = "INSERT INTO users VALUES ($1)";
+
 /*
 app.get('/api/user/new', async (req, res) => {
   console.log("inside server: ");
   return "4Head";
 });
 */
-const queryGetUser = "SELECT * FROM users WHERE user_id = $1";
-const queryInsertUser = "INSERT INTO users VALUES ($1)";
 
+/* Returns the user's information if exists */
 app.post('/api/user/exists', async (req, res) => {
-  console.log("req "+JSON.stringify(req.body));
   const values = [req.body.userId];
   try {
     const result = await client.query(queryGetUser, values);
-    console.log("Success");
-    console.log(result.rows[0]);
+
+    let ret = {users: []};
+
     if (result.rows[0]) {
-      console.log("got rows");
-      res.json(result.rows[0]);
-    }else {
-      console.log("no rows");
-      res.json([]);
+      let users = [];
+      result.rows.map(row => {
+        users.push(row);
+      });
+      ret.users = users;
     }
+    res.json(ret);
   }catch(err) {
     console.log(err);
     res.send(err);
   }
 });
 
+/* Returns all users from users table */
 app.get('/users', async (req, res) => {
   try {
     const result = await client.query('SELECT * FROM users');
-    const jsonRes = JSON.stringify(result, null, 4);
-    console.log(jsonRes);
     
-    //const rows = { "results": (result) ? result.rows : null};
-    const rows = (result)? result.rows : null;
-    console.log(rows);
-    //console.log(jsonRes.rows);
+    let ret = {users: []};
 
-    res.json(rows);
+    if (result.rows[0]) {
+      let users = [];
+      result.rows.map(row => {
+        users.push(row);
+      });
+      ret.users = users;
+    }
+    res.json(ret);
   } catch (err) {
     console.error(err);
     res.send("Error " + err);

@@ -1,15 +1,18 @@
 import React, { Component } from "react";
 import { Button } from "react-bootstrap";
-import  SaveEntryBackend  from "./SaveEntryBackend";
+import SaveEntryBackend from "./SaveEntryBackend";
 
 class SaveEntryButton extends Component {
   render() {
     return (
       <div>
-        <Button 
-        bsStyle="primary" 
-        onClick={()=>{SaveEntryBackend.insertUserIfNew("1")}}>
-          Backend Test
+        <Button
+          bsStyle="primary"
+          onClick={() => {
+            SaveEntryBackend.insertUserIfNew("12");
+          }}
+        >
+          Insert User
         </Button>
       </div>
     );

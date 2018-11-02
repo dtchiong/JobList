@@ -1,10 +1,17 @@
 /* eslint-disable no-undef */
 
+/* Checks if the user with userId exists in the DB, if not, then it's inserted */
 async function insertUserIfNew(userId) {
-  const res = await userExists(userId);
-  console.log(res);
+  const exists = await userExists(userId);
+  console.log("user exists: "+ exists);
+  if (!exists) {
+    insertUser(userId);
+  }
 }
 
+/* Calls a fetch request to check if the user with userId exists in the DB 
+ * Returns true if user exists, else false
+ */
 function userExists(userId) {
   let data = { userId: userId };
 
@@ -26,9 +33,10 @@ function userExists(userId) {
     });
 }
 
-/*
+/* Calls a fetch post request to insert a user with userId into the DB
+ * Returns true if successful
+ */
 function insertUser(userId) {
-  console.log("insertUser()");
 
   let data = {userId: userId};
 
@@ -40,9 +48,14 @@ function insertUser(userId) {
     }
   }).then(checkStatus)
     .then(parseJSON)
-    .then(res => console.log(res));
+    .then(res => {
+      if (res.inserted.length > 0) {
+        return true;
+      }else {
+        return false;
+      }
+    });
 }
-*/
 
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {

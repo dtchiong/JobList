@@ -32,7 +32,7 @@ if (process.env.NODE_ENV === "production") {
   //app.use(express.static("client/build"));
   console.log("In Production");
 }else {
-  console.log("In dev build"); 
+  console.log("In Development"); 
   connURL = fs.readFileSync("pg-cred.txt", "utf8");
 }
 
@@ -43,15 +43,7 @@ const client = new Client({
 });
 
 client.connect();
-/*
-client.query('SELECT * FROM users;', (err, res) => {
-  if (err) throw err;
-  for (let row of res.rows) {
-    console.log(JSON.stringify(row));
-  }
-  client.end();
-});
-*/
+
 const COLUMNS = [
   "carbohydrate_g",
   "protein_g",
@@ -63,14 +55,7 @@ const COLUMNS = [
 ];
 
 const queryGetUser = "SELECT * FROM users WHERE user_id = $1";
-const queryInsertUser = "INSERT INTO users VALUES ($1)";
-
-/*
-app.get('/api/user/new', async (req, res) => {
-  console.log("inside server: ");
-  return "4Head";
-});
-*/
+const queryInsertUser = "INSERT INTO users VALUES ($1) RETURNING *";
 
 /* Returns the user's information if exists */
 app.post('/api/user/exists', async (req, res) => {
@@ -94,8 +79,18 @@ app.post('/api/user/exists', async (req, res) => {
   }
 });
 
-/* Returns all users from users table */
-app.get('/users', async (req, res) => {
+app.post('/api/user/insert', async (req, res) => {
+  const values = [req.body.userId];
+  try {
+    const result = await client.query(queryInsertUser, values);
+    res.json({inserted: result.rows});
+  }catch(err) {
+    res.json(500, err);
+  }
+});
+
+/* Returns all users from the "users" table */
+app.get('/api/user/getAll', async (req, res) => {
   try {
     const result = await client.query('SELECT * FROM users');
     

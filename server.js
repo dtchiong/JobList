@@ -56,6 +56,12 @@ const COLUMNS = [
 
 const queryGetUser = "SELECT * FROM users WHERE user_id = $1";
 const queryInsertUser = "INSERT INTO users VALUES ($1) RETURNING *";
+const queryUpdateUserProfile = `UPDATE users 
+                                SET first_name = $2, last_name = $3, email = $4 
+                                WHERE user_id = $1 RETURNING *`;
+const queryInsertEntry = "";
+const queryUpdateEntry = "";
+const queryDeleteEntry = "";
 
 /* Returns the user's information if exists */
 app.post('/api/user/exists', async (req, res) => {
@@ -94,7 +100,7 @@ app.get('/api/user/getAll', async (req, res) => {
   try {
     const result = await client.query('SELECT * FROM users');
     
-    let ret = {users: []};
+    let ret = {users: [], count: 0};
 
     if (result.rows[0]) {
       let users = [];
@@ -102,6 +108,7 @@ app.get('/api/user/getAll', async (req, res) => {
         users.push(row);
       });
       ret.users = users;
+      ret.count = users.length;
     }
     res.json(ret);
   } catch (err) {
@@ -110,7 +117,31 @@ app.get('/api/user/getAll', async (req, res) => {
   }
 }); 
 
-app.get("/api/food", (req, res) => { //request, response?
+/* Updates the user with new values and returns the updated user and the count-should be 1 */
+app.post('/api/user/update'), async (req, res) => {
+  try {
+    const body = req.body;
+    const values = [body.userId, body.firstName, body.lastName, body.email];
+    const result = await client.query(queryUpdateUserProfile, values);
+
+    let ret = {users: [], count: 0};
+
+    if (result.rows[0]) {
+      let users = [];
+      result.rows.map(row => {
+        users.push(row);
+      });
+      ret.users = users;
+      ret.count = users.length;
+    }
+    ret.json(ret);
+  }catch(err) {
+    console.err(err);
+    res.send(400, err);
+  }
+}
+
+app.get("/api/food", (req, res) => {
   
   const param = req.query.q;
 

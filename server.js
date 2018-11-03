@@ -57,7 +57,7 @@ const COLUMNS = [
 const queryGetUser = "SELECT * FROM users WHERE user_id = $1";
 const queryInsertUser = "INSERT INTO users VALUES ($1) RETURNING *";
 const queryUpdateUserProfile = `UPDATE users 
-                                SET first_name = $2, last_name = $3, email = $4 
+                                SET first_name = $2, last_name = $3 
                                 WHERE user_id = $1 RETURNING *`;
 const queryInsertEntry = "";
 const queryUpdateEntry = "";
@@ -89,9 +89,37 @@ app.post('/api/user/insert', async (req, res) => {
   const values = [req.body.userId];
   try {
     const result = await client.query(queryInsertUser, values);
-    res.json({inserted: result.rows});
+    res.json({users: result.rows, count: result.rows.length});
   }catch(err) {
     res.json(500, err);
+  }
+});
+
+/* Updates the user with new values and returns the updated user and the count(should be 1) */
+app.post('/api/user/update', async (req, res) => {
+  
+  try {
+    const body = req.body;
+    const values = [body.userId, body.firstName, body.lastName];
+    
+    const result = await client.query(queryUpdateUserProfile, values);
+
+    let ret = {users: [], count: 0};
+
+    if (result.rows[0]) {
+      let users = [];
+      result.rows.map(row => {
+        users.push(row);
+      });
+      ret.users = users;
+      ret.count = users.length;
+      res.json(ret);
+    }else {
+      res.send(401);
+    }
+  }catch(err) {
+    console.log(err);
+    res.send(400, err);
   }
 });
 
@@ -113,33 +141,9 @@ app.get('/api/user/getAll', async (req, res) => {
     res.json(ret);
   } catch (err) {
     console.error(err);
-    res.send("Error " + err);
-  }
-}); 
-
-/* Updates the user with new values and returns the updated user and the count-should be 1 */
-app.post('/api/user/update'), async (req, res) => {
-  try {
-    const body = req.body;
-    const values = [body.userId, body.firstName, body.lastName, body.email];
-    const result = await client.query(queryUpdateUserProfile, values);
-
-    let ret = {users: [], count: 0};
-
-    if (result.rows[0]) {
-      let users = [];
-      result.rows.map(row => {
-        users.push(row);
-      });
-      ret.users = users;
-      ret.count = users.length;
-    }
-    ret.json(ret);
-  }catch(err) {
-    console.err(err);
     res.send(400, err);
   }
-}
+}); 
 
 app.get("/api/food", (req, res) => {
   

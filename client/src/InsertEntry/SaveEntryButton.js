@@ -9,10 +9,19 @@ class SaveEntryButton extends Component {
         <Button
           bsStyle="primary"
           onClick={() => {
-            SaveEntryBackend.insertUserIfNew("13");
+            SaveEntryBackend.insertUserIfNew("18");
           }}
         >
           Insert User
+        </Button>
+
+        <Button
+          bsStyle="primary"
+          onClick={() => {
+            SaveEntryBackend.updateUser({userId: "1", firstName: "Dyrone", lastName: "Tonque"});
+          }}
+        >
+          Update User
         </Button>
       </div>
     );

@@ -1,5 +1,7 @@
 /* eslint-disable no-undef */
 
+//TODO: Refactor status checking to 1 or 2 methods to be used for all functions 
+
 /* Checks if the user with userId exists in the DB, if not, then it's inserted */
 async function insertUserIfNew(userId) {
   const exists = await userExists(userId);
@@ -22,7 +24,7 @@ function userExists(userId) {
       "Content-Type": "application/json"
     }
   })
-    .then(checkStatus)
+    .then(checkStatus2)
     .then(parseJSON)
     .then(res => {
       if (res.users.length > 0) {
@@ -46,7 +48,7 @@ function insertUser(userId) {
       "Content-Type": "application/json"
     }
   })
-    .then(checkStatus)
+    .then(checkStatus2)
     .then(parseJSON)
     .then(res => {
       if (res.count > 0) {
@@ -56,15 +58,13 @@ function insertUser(userId) {
     });
 }
 
+/* Calls a fetch post to update the user's information in the DB */
 function updateUser(user) {
-
   let data = {
     userId: user.userId,
     firstName: user.firstName,
     lastName: user.lastName
   };
-
-  console.log(data);
 
   return fetch(`api/user/update`, {
     method: "POST",
@@ -72,21 +72,76 @@ function updateUser(user) {
     headers: {
       "Content-Type": "application/json"
     }
-  })
-    .then(res=> {
-      if (res.status >= 200 && res.status < 300) {
-        return ({status: res.status, message: "Success"});
-      }else if (res.status === 400) {
-        return ({status: res.status, message: "First and last name must be less than 50 characters"});
-      }else if (res.status === 401) {
-        return ({status: res.status, message: "User unauthorized" });
-      }else {
-        return ({status: res.status, message: "Unknown error"});
-      }
-    });
+  });
 }
 
-function checkStatus(response) {
+/* Calls a fetch post to insert a new entry into the user's list in the DB */
+function insertEntry(user) {
+  let data = user.userId;
+
+  return fetch(`api/user/entry/insert`, {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  });
+}
+
+/* Calls a fetch post to update an entry in the user's list in the DB */
+function updateEntry(user) {
+  let data = user.userId;
+
+  return fetch(`api/user/entry/update`, {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  });
+}
+
+/* Calls a fetch post to delete an entry in the user's list in the DB */
+function deleteEntry(user) {
+  let data = user.userId;
+
+  return fetch(`api/user/entry/delete`, {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  });
+}
+
+/* Calls a fetch post to get all entries from a user's list in the DB */
+function getAllEntries(user) {
+  let data = user.userId;
+
+  return fetch(`api/user/entry/getAll`, {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  });
+}
+
+function checkStatus(res) {
+  let obj = { status: res.status, message: null };
+  if (res.status >= 200 && res.status < 300) {
+    obj.message = "Success";
+  } else if (res.status === 400) {
+    obj.message = "Bad request";
+  } else if (res.status === 401) {
+    obj.message = "Unauthorized user";
+  } else {
+    obj.message = "Unknown error";
+  }
+  return obj;
+}
+
+function checkStatus2(response) {
   if (response.status >= 200 && response.status < 300) {
     return response;
   }

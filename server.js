@@ -3,21 +3,17 @@ var bodyParser = require("body-parser"); //so we can do console.log(req.body) in
 const fs = require("fs");
 const sqlite = require("sql.js");
 const path = require('path');
-
+const { Client } = require('pg');
 
 const filebuffer = fs.readFileSync("db/usda-nnd.sqlite3");
 const db = new sqlite.Database(filebuffer);
-
-const { Client } = require('pg');
 var connURL = process.env.DATBASE_URL;
 
 const app = express();
 
 app.use(express.static(path.join(__dirname, 'client/build')));
-
 app.use(bodyParser.urlencoded({extended: false}));
-// parse application/json
-app.use(bodyParser.json());
+app.use(bodyParser.json()); // parse application/json
 
 app.set("port", process.env.PORT || 3001);
 
@@ -143,7 +139,23 @@ app.get('/api/user/getAll', async (req, res) => {
     console.error(err);
     res.send(400, err);
   }
-}); 
+});
+
+app.post('/api/user/entry/insert', async (req, res) => {
+
+});
+
+app.post('/api/user/entry/update', async (req, res) => {
+
+});
+
+app.post('/api/user/entry/delete', async (req, res) => {
+
+});
+
+app.post('/api/user/entry/getAll', async (req, res) => {
+
+});
 
 app.get("/api/food", (req, res) => {
   

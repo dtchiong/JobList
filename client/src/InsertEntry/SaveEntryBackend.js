@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 
-//TODO: Refactor status checking to 1 or 2 methods to be used for all functions 
+//TODO: Refactor status checking to 1 or 2 methods to be used for all functions
 
 /* Checks if the user with userId exists in the DB, if not, then it's inserted */
 async function insertUserIfNew(userId) {
@@ -76,8 +76,11 @@ function updateUser(user) {
 }
 
 /* Calls a fetch post to insert a new entry into the user's list in the DB */
-function insertEntry(user) {
-  let data = user.userId;
+function insertEntry(user, entry) {
+  let data = {
+    userId: user.userId,
+    entry: entry
+  };
 
   return fetch(`api/user/entry/insert`, {
     method: "POST",
@@ -89,8 +92,12 @@ function insertEntry(user) {
 }
 
 /* Calls a fetch post to update an entry in the user's list in the DB */
-function updateEntry(user) {
-  let data = user.userId;
+function updateEntry(user, entry, oldEntry) {
+  let data = {
+    userId: user.userId,
+    entry: entry,
+    oldEntry: oldEntry
+  };
 
   return fetch(`api/user/entry/update`, {
     method: "POST",
@@ -102,8 +109,11 @@ function updateEntry(user) {
 }
 
 /* Calls a fetch post to delete an entry in the user's list in the DB */
-function deleteEntry(user) {
-  let data = user.userId;
+function deleteEntry(user, entry) {
+  let data = {
+    userId: user.userId,
+    entry: entry,
+  };
 
   return fetch(`api/user/entry/delete`, {
     method: "POST",
@@ -116,7 +126,7 @@ function deleteEntry(user) {
 
 /* Calls a fetch post to get all entries from a user's list in the DB */
 function getAllEntries(user) {
-  let data = user.userId;
+  let data = { userId: user.userId };
 
   return fetch(`api/user/entry/getAll`, {
     method: "POST",
@@ -156,5 +166,5 @@ function parseJSON(response) {
   return response.json();
 }
 
-const SaveEntryBackend = { insertUserIfNew, updateUser };
+const SaveEntryBackend = { insertUserIfNew, updateUser, insertEntry, updateEntry, deleteEntry, getAllEntries };
 export default SaveEntryBackend;

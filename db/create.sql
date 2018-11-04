@@ -13,7 +13,7 @@ CREATE TABLE lists (
     UNIQUE (user_id, company_name, job_title),
     user_id         VARCHAR(255) NOT NULL REFERENCES users(user_id),
     company_name    VARCHAR(50)  NOT NULL,
-    job_title       VARCHAR(50),
+    job_title       VARCHAR(50)  NOT NULL,
     website         VARCHAR(255),
     area            VARCHAR(50),
     apply_method    VARCHAR(50),

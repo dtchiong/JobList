@@ -27,7 +27,6 @@ class RoutesContainer extends Component {
   handleAuthentication = ({ location }) => {
     if (/access_token|id_token|error/.test(location.hash)) {
       auth.handleAuthentication(this.doSetUserProfile);
-      console.log("after auth.handleAuth");
     }
   };
 
@@ -36,10 +35,8 @@ class RoutesContainer extends Component {
    * else we call the helper function to set the profile
    */
   setUserProfile = (err, user) => {
-    console.log("setUserProfile: ");
-    console.log("err: " + err);
-    console.log("user:" + user);
     if (err) {
+      //TODO: fix references to log out here
       //console.log("setUserProfile: "+err);
       //this.child.logout();
       return;
@@ -48,8 +45,6 @@ class RoutesContainer extends Component {
   };
 
   doSetUserProfile = user => {
-    console.log("doSetUserProfile user: " + user.sub);
-
     const newUser = {
       userId: user.sub,
       firstName: null,

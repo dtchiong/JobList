@@ -24,10 +24,10 @@ export default class Auth {
     }
 
     //pass routes.doSetProfile() to this, then pass as 2nd param to setSession
-    handleAuthentication() {
+    handleAuthentication(doSetUserProfile) {
         this.auth0.parseHash((err, authResult) => {
             if (authResult && authResult.accessToken && authResult.idToken) {
-                this.setSession(authResult);
+                this.setSession(authResult, doSetUserProfile);
                 history.replace('/home');
             }else if (err) {
                 history.replace('/home');
@@ -37,14 +37,16 @@ export default class Auth {
         console.log("end of handleAuth");
     }
 
-    setSession(authResult) {
+    setSession(authResult, doSetUserProfile) {
         // Set the time that the Access Token will expire at
         let expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
         localStorage.setItem('access_token', authResult.accessToken);
         localStorage.setItem('id_token', authResult.idToken);
         localStorage.setItem('expires_at', expiresAt);
         
-        this.doSetUserProfile(authResult.idTokenPayload);
+        //console.log("setSession idTokenPayload: "+JSON.stringify(authResult.idTokenPayload));
+        doSetUserProfile({sub: authResult.idTokenPayload.sub})
+        //this.doSetUserProfile(authResult.idTokenPayload);
         // navigate to the home route
         history.replace('/home');
         console.log("end of setSession");

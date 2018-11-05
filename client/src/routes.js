@@ -16,13 +16,6 @@ const handleAuthentication = ({ location }) => {
   }
 };
 
-//remember how exact path later
-const makeMainRoutes = () => {
-  return (
-    <RoutesContainer/>
-  );
-};
-
 class RoutesContainer extends Component {
   
   state = {
@@ -55,4 +48,4 @@ class RoutesContainer extends Component {
 }
 
 
-export { makeMainRoutes };
+export default RoutesContainer;

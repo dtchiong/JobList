@@ -166,5 +166,5 @@ function parseJSON(response) {
   return response.json();
 }
 
-const SaveEntryBackend = { insertUserIfNew, updateUser, insertEntry, updateEntry, deleteEntry, getAllEntries };
-export default SaveEntryBackend;
+const BackendRequests = { insertUserIfNew, updateUser, insertEntry, updateEntry, deleteEntry, getAllEntries };
+export default BackendRequests;

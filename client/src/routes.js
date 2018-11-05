@@ -5,6 +5,7 @@ import Home from "./Home/Home";
 import Callback from "./Callback/Callback";
 import Auth from "./Auth/Auth";
 import history from "./history";
+import Requests from "./Requests";
 
 const auth = new Auth();
 

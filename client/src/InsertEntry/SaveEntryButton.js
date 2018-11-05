@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Button } from "react-bootstrap";
-import SaveEntryBackend from "./SaveEntryBackend";
+import Requests from "../Requests";
 
 class SaveEntryButton extends Component {
 
@@ -18,7 +18,7 @@ class SaveEntryButton extends Component {
   }
 
   render() { 
-    
+
     const entry1 = new this.Entry("Target", "cashier");
     const entry2 = new this.Entry("Costco", "cashier");
     const entry3 = new this.Entry("Walmart", "cashier");
@@ -28,7 +28,7 @@ class SaveEntryButton extends Component {
         <Button
           bsStyle="primary"
           onClick={() => {
-            SaveEntryBackend.insertUserIfNew("18");
+            Requests.insertUserIfNew("18");
           }}
         >
           Insert User
@@ -37,7 +37,7 @@ class SaveEntryButton extends Component {
         <Button
           bsStyle="primary"
           onClick={() => {
-            SaveEntryBackend.updateUser({userId: "1", firstName: "4Head", lastName: "Bill"});
+            Requests.updateUser({userId: "1", firstName: "4Head", lastName: "Bill"});
           }}
         >
           Update User
@@ -46,7 +46,7 @@ class SaveEntryButton extends Component {
         <Button
           bsStyle="primary"
           onClick={() => {
-            SaveEntryBackend.insertEntry({userId: "1"}, entry3);
+            Requests.insertEntry({userId: "1"}, entry3);
           }}
         >
           Insert Entry
@@ -55,7 +55,7 @@ class SaveEntryButton extends Component {
         <Button
           bsStyle="primary"
           onClick={() => {
-            SaveEntryBackend.updateEntry({userId: "1"}, entry3, entry2);
+            Requests.updateEntry({userId: "1"}, entry3, entry2);
           }}
         >
           Update Entry
@@ -64,7 +64,7 @@ class SaveEntryButton extends Component {
         <Button
           bsStyle="primary"
           onClick={() => {
-            SaveEntryBackend.deleteEntry({userId: "1"}, entry3);
+            Requests.deleteEntry({userId: "1"}, entry3);
           }}
         >
           Delete Entry

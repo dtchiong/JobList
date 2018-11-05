@@ -9,15 +9,22 @@ import Requests from "./Requests";
 
 const auth = new Auth();
 
-//Q: Why are there brackets around location?
-const handleAuthentication = ({ location }) => {
-  if (/access_token|id_token|error/.test(location.hash)) {
-    auth.handleAuthentication();
-  }
-};
-
 class RoutesContainer extends Component {
-  
+
+  //Q: Why are there brackets around location?
+  handleAuthentication = ({ location }) => {
+    if (/access_token|id_token|error/.test(location.hash)) {
+      auth.handleAuthentication();
+      console.log("after auth.handleAuth");
+    }
+  };
+
+  constructor() {
+    super();
+    //call function to set userId here
+    console.log("RoutesContainer: Constructor()");
+  }
+
   state = {
     user: {
       userId: null,
@@ -26,17 +33,20 @@ class RoutesContainer extends Component {
       email: null
     }
   };
-  
+
   render() {
     return (
-      <Router history={history}> 
+      <Router history={history}>
         <div>
           <Route path="/" render={props => <App auth={auth} {...props} />} />
-          <Route path="/home" render={props => <Home auth={auth} {...props} />} />
+          <Route
+            path="/home"
+            render={props => <Home auth={auth} {...props} />}
+          />
           <Route
             path="/callback"
             render={props => {
-              handleAuthentication(props);
+              this.handleAuthentication(props);
               return <Callback {...props} />;
             }}
           />
@@ -46,6 +56,5 @@ class RoutesContainer extends Component {
     );
   }
 }
-
 
 export default RoutesContainer;

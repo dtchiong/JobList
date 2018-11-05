@@ -23,6 +23,7 @@ export default class Auth {
         this.isAuthenticated = this.isAuthenticated.bind(this);
     }
 
+    //pass routes.doSetProfile() to this, then pass as 2nd param to setSession
     handleAuthentication() {
         this.auth0.parseHash((err, authResult) => {
             if (authResult && authResult.accessToken && authResult.idToken) {
@@ -33,6 +34,7 @@ export default class Auth {
                 console.log(err);
           }
         });
+        console.log("end of handleAuth");
     }
 
     setSession(authResult) {
@@ -45,6 +47,7 @@ export default class Auth {
         this.doSetUserProfile(authResult.idTokenPayload);
         // navigate to the home route
         history.replace('/home');
+        console.log("end of setSession");
     }
 
     /* Uses the access token from local storage to get the user profile of the authenticated user */
@@ -56,6 +59,7 @@ export default class Auth {
             return;
         }
         
+        //this.auth0.client.userInfo(access_token, callback);
         this.auth0.client.userInfo(access_token, callback);
     }
 

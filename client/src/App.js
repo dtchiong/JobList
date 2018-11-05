@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-
 import SelectedFoods from "./SelectedFoods";
 import FoodSearch from "./FoodSearch";
 import LoginControl from "./Auth/LoginControl";

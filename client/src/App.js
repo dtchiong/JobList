@@ -3,29 +3,13 @@ import SelectedFoods from "./SelectedFoods";
 import FoodSearch from "./FoodSearch";
 import LoginControl from "./Auth/LoginControl";
 import SaveEntryButton from "./InsertEntry/SaveEntryButton";
+import Requests from "./Requests";
 
 class App extends Component {
-
-  /*
-  constructor(props) {
-    super(props);
-    this.doSetUserProfile = this.doSetUserProfile.bind(this);
-    this.setUserProfile = this.setUserProfile.bind(this);
-    
-    this.props.auth.doSetUserProfile = this.doSetUserProfile;
-  }
-  */
 
   state = {
     selectedFoods: [],
   };
-
-  /*
-  //Used to set the user profile when the tab is refreshed
-  componentDidMount() {
-    this.props.auth.getUserProfile(this.setUserProfile);
-  }
-  */
 
   removeFoodItem = itemIndex => {
     const filteredFoods = this.state.selectedFoods.filter(
@@ -52,11 +36,13 @@ class App extends Component {
           <FoodSearch onFoodClick={this.addFood} />
 
           <LoginControl 
+            user={this.props.user}
             onRef={ref => (this.child = ref)}
             history={this.props.history}
             auth={this.props.auth}
             setUserProfile={this.setUserProfile}
             clearUserId={this.props.clearUserId}
+            insertUserIfNew={this.props.requests.insertUserIfNew}
           />
 
           <SaveEntryButton

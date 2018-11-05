@@ -24,9 +24,9 @@ class RoutesContainer extends Component {
   };
 
   //Q: Why are there brackets around location?
-  handleAuthentication = ({ location }) => {
+  handleAuthentication = async ({ location }) => {
     if (/access_token|id_token|error/.test(location.hash)) {
-      auth.handleAuthentication(this.doSetUserProfile);
+      await auth.handleAuthentication(this.doSetUserProfile, Requests.insertUserIfNew);
     }
   };
 
@@ -74,7 +74,13 @@ class RoutesContainer extends Component {
           <Route
             path="/"
             render={props => (
-              <App auth={auth} clearUserId={this.clearUserId} {...props} />
+              <App
+                auth={auth}
+                user={this.state.user}
+                clearUserId={this.clearUserId}
+                requests={Requests}
+                {...props}
+              />
             )}
           />
           <Route

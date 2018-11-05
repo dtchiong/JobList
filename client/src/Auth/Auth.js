@@ -27,11 +27,12 @@ export default class Auth {
   }
 
   /* Sets the userId after authenticating */
-  handleAuthentication(doSetUserProfile) {
+  handleAuthentication(doSetUserProfile, insertUserIfNew) {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult);
         doSetUserProfile(authResult.idTokenPayload);
+        insertUserIfNew({userId: authResult.idTokenPayload.sub});
         history.replace("/home");
       } else if (err) {
         history.replace("/home");

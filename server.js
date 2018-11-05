@@ -96,6 +96,7 @@ app.post("/api/user/exists", async (req, res) => {
 
 app.post("/api/user/insert", async (req, res) => {
   const values = [req.body.userId];
+  console.log(values);
   try {
     const result = await client.query(queryInsertUser, values);
     res.json({ users: result.rows, count: result.rows.length });

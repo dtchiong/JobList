@@ -3,11 +3,11 @@
 //TODO: Refactor status checking to 1 or 2 methods to be used for all functions
 
 /* Checks if the user with userId exists in the DB, if not, then it's inserted */
-async function insertUserIfNew(userId) {
-  const exists = await userExists(userId);
+async function insertUserIfNew(user) {
+  const exists = await userExists(user.userId);
   console.log("user exists: " + exists);
   if (!exists) {
-    insertUser(userId);
+    insertUser(user.userId);
   }
 }
 

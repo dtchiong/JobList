@@ -1,0 +1,23 @@
+.header {
+    vertical-align: middle;
+}
+
+#brand {
+    font-size: 20pt;
+}
+
+.tab-link {
+    margin-left: 5em;
+    margin-bottom: 0px;
+    font-size: 15pt;
+    padding: 0px;
+}
+
+#welcome {
+    font-size: 15pt;
+}
+
+.className {
+    font-size: 13pt;
+}
+

@@ -1,0 +1,9 @@
+.app-body {
+    padding-top:50px;
+}
+
+@media only screen and (max-width:600px) {
+    .app-body {
+        padding-top:160px;
+    }
+}

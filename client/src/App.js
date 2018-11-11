@@ -1,22 +1,19 @@
 import React, { Component } from "react";
-import LoginControl from "./Auth/LoginControl";
 import SaveEntryButton from "./InsertEntry/SaveEntryButton";
 import Requests from "./Requests";
 import HeaderBar from "./HeaderBar/HeaderBar";
-
 import "./app.css";
 
 class App extends Component {
   state = {
-    selectedFoods: []
   };
 
+  //NOTE: the "container" classname is from bootstrap and makes our content centered instead of using 100% width
   render() {
     return (
-      <div className="App">
-        <HeaderBar />
-        <div className="app-body">
-          <LoginControl
+      <div className="container">
+        <div className="App">
+          <HeaderBar
             user={this.props.user}
             onRef={ref => (this.child = ref)}
             history={this.props.history}
@@ -25,8 +22,9 @@ class App extends Component {
             clearUserId={this.props.clearUserId}
             insertUserIfNew={this.props.requests.insertUserIfNew}
           />
-
-          <SaveEntryButton />
+          <div className="app-body">
+            <SaveEntryButton />
+          </div>
         </div>
       </div>
     );

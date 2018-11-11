@@ -2,15 +2,14 @@ import React, { Component } from "react";
 import { Navbar, Button } from "react-bootstrap";
 
 class LoginControl extends Component {
-  
   componentDidMount() {
-    this.props.onRef(this)
+    this.props.onRef(this);
   }
 
   componentWillUnmount() {
-    this.props.onRef(undefined)
+    this.props.onRef(undefined);
   }
-  
+
   goTo(route) {
     this.props.history.replace(`/${route}`);
   }
@@ -30,40 +29,20 @@ class LoginControl extends Component {
 
     return (
       <div>
-        <Navbar fluid>
-          <Navbar.Header>
-            <Navbar.Brand>
-              <a href="#">Auth0 - React</a>
-            </Navbar.Brand>
+          {!isAuthenticated() && (
             <Button
-              bsStyle="primary"
-              className="btn-margin"
-              onClick={this.goTo.bind(this, "home")}
+              onClick={this.login.bind(this)}
             >
-              Home
+              Log In
             </Button>
-            {!isAuthenticated() && (
-              <Button
-                id="qsLoginBtn"
-                bsStyle="primary"
-                className="btn-margin"
-                onClick={this.login.bind(this)}
-              >
-                Log In
-              </Button>
-            )}
-            {isAuthenticated() && (
-              <Button
-                id="qsLogoutBtn"
-                bsStyle="primary"
-                className="btn-margin"
-                onClick={this.logout.bind(this)}
-              >
-                Log Out
-              </Button>
-            )}
-          </Navbar.Header>
-        </Navbar>
+          )}
+          {isAuthenticated() && (
+            <Button
+              onClick={this.logout.bind(this)}
+            >
+              Log Out
+            </Button>
+          )}
       </div>
     );
   }

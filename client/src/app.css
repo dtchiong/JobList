@@ -1,9 +1,12 @@
+/* Mobile first design 
+   - on small devices, increase the content padding so that it's past the header
+*/
 .app-body {
-    padding-top:50px;
+    padding-top: 300px;
 }
 
-@media only screen and (max-width:600px) {
+@media (min-width: 768px) {
     .app-body {
-        padding-top:160px;
+        padding-top: 100px;
     }
 }

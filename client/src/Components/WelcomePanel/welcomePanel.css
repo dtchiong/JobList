@@ -1,8 +1,31 @@
 .text {
-    display: inline-block;
+  display: inline-block;
 }
 
 .name {
-    margin-left: 15px;
-    font-weight: bold;
+  margin-left: 15px;
+  font-weight: bold;
+}
+
+/* block makes the element go on it's own line */
+.prompt {
+    display: block;
+}
+
+/* 768 for med */
+@media (min-width: 768px) {
+  .prompt {
+      margin-left: 10px;
+      display: inline-block;
+  }
+}
+
+@media (min-width: 992px) {
+    .prompt {
+        margin-left: 30px;
+    }
+}
+
+a {
+  cursor: pointer;
 }

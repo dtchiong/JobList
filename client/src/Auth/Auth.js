@@ -38,7 +38,7 @@ export default class Auth {
         history.replace("/home");
         console.log(err);
       }
-      console.log("authResult: "+JSON.stringify(authResult, null, 4));
+      //console.log("authResult: "+JSON.stringify(authResult, null, 4));
     });
   }
 

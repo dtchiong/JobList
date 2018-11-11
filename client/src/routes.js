@@ -21,11 +21,13 @@ class RoutesContainer extends Component {
       userId: null,
       firstName: null,
       lastName: null,
-      email: null
+      email: null,
+      emailVerified: null
     }
   };
 
   //Q: Why are there brackets around location?
+  //TODO: implement getting name from DB
   handleAuthentication = async ({ location }) => {
     if (/access_token|id_token|error/.test(location.hash)) {
       await auth.handleAuthentication(this.doSetUserProfile, Requests.insertUserIfNew);
@@ -51,7 +53,8 @@ class RoutesContainer extends Component {
       userId: user.sub,
       firstName: null,
       lastName: null,
-      email: null
+      email: user.email,
+      emailVerified: user.email_verified
     };
     this.setState({ user: newUser });
   };
@@ -68,7 +71,7 @@ class RoutesContainer extends Component {
   };
 
   render() {
-    console.log("render() -\n  userid: " + this.state.user.userId);
+    console.log("render(): " + JSON.stringify(this.state, null, 4));
 
     return (
       <Router history={history}>

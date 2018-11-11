@@ -3,6 +3,7 @@ import { Grid, Row, Column } from "react-bootstrap";
 import Requests from "./Requests";
 import HeaderBar from "./HeaderBar/HeaderBar";
 import WelcomePanel from "./Components/WelcomePanel/WelcomePanel";
+import Table from "./Components/Table/Table";
 import SaveEntryButton from "./InsertEntry/SaveEntryButton";
 import "./app.css";
 
@@ -28,7 +29,7 @@ class App extends Component {
               <WelcomePanel user={this.props.user} auth={this.props.auth}/>
             </Row>
             <Row>
-              <SaveEntryButton />
+              <Table></Table>
             </Row>
           </Grid>
         </div>

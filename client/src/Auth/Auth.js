@@ -10,7 +10,7 @@ export default class Auth {
         ? "https://job-logger.herokuapp.com/callback"
         : "http://localhost:3000/callback",
     responseType: "token id_token",
-    scope: "openid"
+    scope: "openid email"
   });
 
   login() {
@@ -38,6 +38,7 @@ export default class Auth {
         history.replace("/home");
         console.log(err);
       }
+      console.log("authResult: "+JSON.stringify(authResult, null, 4));
     });
   }
 
@@ -63,7 +64,6 @@ export default class Auth {
       return;
     }
 
-    //this.auth0.client.userInfo(access_token, callback);
     this.auth0.client.userInfo(access_token, callback);
   }
 

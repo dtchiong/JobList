@@ -1,0 +1,8 @@
+.text {
+    display: inline-block;
+}
+
+.name {
+    margin-left: 15px;
+    font-weight: bold;
+}

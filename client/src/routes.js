@@ -10,6 +10,8 @@ import Requests from "./Requests";
 const auth = new Auth();
 
 class RoutesContainer extends Component {
+  
+  /* This gets the userId from the access token when the user is logged in and refreshes the page */
   componentDidMount() {
     auth.getUserProfile(this.setUserProfile);
   }

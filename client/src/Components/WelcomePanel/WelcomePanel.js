@@ -12,7 +12,7 @@ class WelcomePanel extends Component {
     const user = this.props.user;
     //If the user is logged in, we should his name if it's set or his email
     let displayName = "";
-    if (user.lastName || user.lastName) {
+    if (user.firstName || user.lastName) {
         if (user.firstName) {displayName += user.firstName}
         displayName += " ";
         if (user.lastName) {displayName += user.lastName}

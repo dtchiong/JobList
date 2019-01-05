@@ -25,7 +25,7 @@ class HeaderBar extends Component {
         <Navbar style={navBarStyle} inverse fixedTop>
           <Navbar.Header>
             <Navbar.Brand style={brandTextStyle} id="brand">
-              JobLogger
+              JobList
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>

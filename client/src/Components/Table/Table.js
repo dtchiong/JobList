@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import {Button} from "react-bootstrap";
 import { Table } from "react-bootstrap";
 import "./table.css";
+import history from "../../history";
 
 class myTable extends Component {
   columns = [
@@ -8,7 +10,6 @@ class myTable extends Component {
     "Job Title",
     "Website",
     "City",
-    "Apply Method",
     "Apply Date",
     "Got Response",
     "App Status",
@@ -29,16 +30,24 @@ class myTable extends Component {
     return table;
   };
 
+  changePage = () => {
+    history.replace("/home");
+  }
+
   render() {
     const colHeaders = this.columns.map(col => <th>{col}</th>);
 
     return (
-        <Table className="table table-fixed" responsive style={{ marginTop: "20px" }}>
+        <div>
+          <Button onClick={this.changePage}>PRESS ME</Button>
+          <Table className="table table-fixed" responsive style={{ marginTop: "20px" }}>
           <thead>
             <tr>{colHeaders}</tr>
           </thead>
           <tbody>{this.rows(30)}</tbody>
         </Table>
+        </div>
+
     );
   }
 }

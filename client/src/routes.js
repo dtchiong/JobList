@@ -10,7 +10,6 @@ import Requests from "./Requests";
 const auth = new Auth();
 
 class RoutesContainer extends Component {
-  
   /* This gets the userId from the access token when the user is logged in and refreshes the page */
   componentDidMount() {
     auth.getUserProfile(this.setUserProfile);
@@ -30,7 +29,10 @@ class RoutesContainer extends Component {
   //TODO: implement getting name from DB
   handleAuthentication = async ({ location }) => {
     if (/access_token|id_token|error/.test(location.hash)) {
-      await auth.handleAuthentication(this.doSetUserProfile, Requests.insertUserIfNew);
+      await auth.handleAuthentication(
+        this.doSetUserProfile,
+        Requests.insertUserIfNew
+      );
     }
   };
 
@@ -74,34 +76,43 @@ class RoutesContainer extends Component {
     console.log("render(): " + JSON.stringify(this.state, null, 4));
 
     return (
-      <Router history={history}>
-        <div>
-          <Route
-            path="/"
-            render={props => (
-              <App
-                auth={auth}
-                user={this.state.user}
-                clearUserId={this.clearUserId}
-                requests={Requests}
-                {...props}
-              />
-            )}
-          />
-          <Route
-            path="/home"
-            render={props => <Home auth={auth} {...props} />}
-          />
-          <Route
-            path="/callback"
-            render={props => {
-              this.handleAuthentication(props);
-              return <Callback {...props} />;
-            }}
-          />
-          <Route path="/test" render={props => <h2> hi billy bob </h2>} />
-        </div>
-      </Router>
+      <div>
+        {" "}
+        <h1>hi</h1>
+        <h1>hi2</h1>
+        <h1>h3</h1>
+        <Router history={history}>
+          <div>
+            <Route
+              exact path="(/|/home)"
+              render={props => (
+                <App
+                  auth={auth}
+                  user={this.state.user}
+                  clearUserId={this.clearUserId}
+                  requests={Requests}
+                  {...props}
+                />
+              )}
+            />
+            <Route
+              exact path="/profile"
+              render={props => <h1>profile</h1>}
+            />
+            <Route
+              exact path="/about"
+              render={props => <h1>about</h1>}
+            />
+            <Route
+              path="/callback"
+              render={props => {
+                this.handleAuthentication(props);
+                return <Callback {...props} />;
+              }}
+            />
+          </div>
+        </Router>
+      </div>
     );
   }
 }

@@ -6,7 +6,6 @@ import Table from "./Components/Table/Table";
 import "./app.css";
 
 class App extends Component {
-
   //NOTE: the "container" classname is from bootstrap and makes our content centered instead of using 100% width
   render() {
     return (
@@ -20,14 +19,14 @@ class App extends Component {
           clearUserId={this.props.clearUserId}
           insertUserIfNew={this.props.requests.insertUserIfNew}
         />
-
         <div className="app-body">
+          <WelcomePanel user={this.props.user} auth={this.props.auth} />
+        </div>
+        <div>
           <Grid>
+            <Row />
             <Row>
-              <WelcomePanel user={this.props.user} auth={this.props.auth}/>
-            </Row>
-            <Row>
-              <Table></Table>
+              <Table />
             </Row>
           </Grid>
         </div>

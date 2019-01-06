@@ -1,0 +1,16 @@
+
+/* This is to pad the page content to appear below the header
+ * 
+ * Mobile first design 
+ * - on small devices, content padding needs to be bigger to go below the header
+*/
+
+.body-top-padding {
+    padding-top: 75px;
+}
+
+@media (min-width: 768px) {
+    .body-top-padding {
+        padding-top: 100px;
+    }
+}

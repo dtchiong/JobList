@@ -39,7 +39,6 @@ class myTable extends Component {
 
     return (
         <div>
-          <Button onClick={this.changePage}>PRESS ME</Button>
           <Table className="table table-fixed" responsive style={{ marginTop: "20px" }}>
           <thead>
             <tr>{colHeaders}</tr>

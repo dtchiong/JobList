@@ -28,7 +28,7 @@ class WelcomePanel extends Component {
         <h1 className="text">Welcome</h1>
         <h1 className="text name">{displayName}</h1>
         {!user.email && 
-            <h2 className="text prompt"><a onClick={this.login.bind(this)}>Login</a> to save your list.</h2>
+            <h1 className="text prompt"><a onClick={this.login.bind(this)}>Login</a> to save your list.</h1>
         }
       </div>
     );

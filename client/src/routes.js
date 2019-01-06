@@ -1,11 +1,17 @@
 import React, { Component } from "react";
 import { Route, Router } from "react-router-dom";
-import App from "./App";
+
+import HeaderBar from "./HeaderBar/HeaderBar";
+import WelcomePanel from "./Components/WelcomePanel/WelcomePanel";
+
 import Home from "./Home/Home";
 import Callback from "./Callback/Callback";
+
 import Auth from "./Auth/Auth";
 import history from "./history";
 import Requests from "./Requests";
+
+import "./routes.css";
 
 const auth = new Auth();
 
@@ -76,42 +82,46 @@ class RoutesContainer extends Component {
     console.log("render(): " + JSON.stringify(this.state, null, 4));
 
     return (
+      //NOTE: the "container" classname is from bootstrap and makes our content centered instead of using 100% width
+
       <div>
-        {" "}
-        <h1>hi</h1>
-        <h1>hi2</h1>
-        <h1>h3</h1>
-        <Router history={history}>
-          <div>
-            <Route
-              exact path="(/|/home)"
-              render={props => (
-                <App
-                  auth={auth}
-                  user={this.state.user}
-                  clearUserId={this.clearUserId}
-                  requests={Requests}
-                  {...props}
-                />
-              )}
-            />
-            <Route
-              exact path="/profile"
-              render={props => <h1>profile</h1>}
-            />
-            <Route
-              exact path="/about"
-              render={props => <h1>about</h1>}
-            />
-            <Route
-              path="/callback"
-              render={props => {
-                this.handleAuthentication(props);
-                return <Callback {...props} />;
-              }}
-            />
-          </div>
-        </Router>
+        <HeaderBar
+          user={this.state.user}
+          /*onRef={ref => (this.child = ref)}*/
+          history={history}
+          auth={auth}
+          setUserProfile={this.setUserProfile}
+          clearUserId={this.clearUserId}
+          insertUserIfNew={Request.insertUserIfNew}
+        />
+        <div className="container">
+          <div className="body-top-padding" />
+          <WelcomePanel user={this.state.user} auth={auth} />
+          <Router history={history}>
+            <div>
+              <Route
+                exact path="(/|/home)"
+                render={props => (
+                  <Home
+                    auth={auth}
+                    user={this.state.user}
+                    requests={Requests}
+                    {...props}
+                  />
+                )}
+              />
+              <Route exact path="/profile" render={props => <h1>profile</h1>} />
+              <Route exact path="/about" render={props => <h1>about</h1>} />
+              <Route
+                path="/callback"
+                render={props => {
+                  this.handleAuthentication(props);
+                  return <Callback {...props} />;
+                }}
+              />
+            </div>
+          </Router>
+        </div>
       </div>
     );
   }

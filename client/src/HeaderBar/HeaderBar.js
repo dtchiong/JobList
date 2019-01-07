@@ -1,8 +1,28 @@
 import React, { Component } from "react";
 import { Nav, Navbar, NavItem, Button } from "react-bootstrap";
 import LoginControl from "../Auth/LoginControl";
+import history from "../history";
 
 class HeaderBar extends Component {
+
+  /*Takes the key from the selected NavItem and changes the page 
+   * using history.replace will prevent the back button from saving the history clicks from 
+   * navigating between home, profile, and about, as opposed to history.push
+   */
+  handleSelectedPage = key => {
+    switch(key) {
+      case "home":
+        history.replace("/home");
+        break;
+      case "profile":
+        history.replace("/profile");
+        break;
+      case "about":
+        history.replace("/about");
+        break;
+    }
+  }
+
   render() {
     const navBarStyle = {
       display: "inline-block",
@@ -30,14 +50,14 @@ class HeaderBar extends Component {
             <Navbar.Toggle />
           </Navbar.Header>
           <Navbar.Collapse>
-            <Nav className="tab-link" style={navLinkStyle}>
-              <NavItem eventKey={1} href="#">
+            <Nav className="tab-link" style={navLinkStyle} onSelect={key=>this.handleSelectedPage(key)}>
+              <NavItem eventKey={"home"} >
                 Home
               </NavItem>
-              <NavItem eventKey={2} href="#">
+              <NavItem  eventKey={"profile"} >
                 Profile
               </NavItem>
-              <NavItem eventKey={3} href="#">
+              <NavItem eventKey={"about"} > 
                 About
               </NavItem>
             </Nav>

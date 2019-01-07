@@ -5,6 +5,8 @@ import HeaderBar from "./HeaderBar/HeaderBar";
 import WelcomePanel from "./Components/WelcomePanel/WelcomePanel";
 
 import Home from "./Home/Home";
+import Profile from "./Components/Profile/Profile";
+import About from "./Components/About/About";
 import Callback from "./Callback/Callback";
 
 import Auth from "./Auth/Auth";
@@ -100,7 +102,8 @@ class RoutesContainer extends Component {
           <Router history={history}>
             <div>
               <Route
-                exact path="(/|/home)"
+                exact
+                path="(/|/home)"
                 render={props => (
                   <Home
                     auth={auth}
@@ -110,8 +113,30 @@ class RoutesContainer extends Component {
                   />
                 )}
               />
-              <Route exact path="/profile" render={props => <h1>profile</h1>} />
-              <Route exact path="/about" render={props => <h1>about</h1>} />
+              <Route
+                exact
+                path="/profile"
+                render={props => (
+                  <Profile
+                    auth={auth}
+                    user={this.state.user}
+                    requests={Requests}
+                    {...props}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path="/about"
+                render={props => (
+                  <About
+                    auth={auth}
+                    user={this.state.user}
+                    requests={Requests}
+                    {...props}
+                  />
+                )}
+              />
               <Route
                 path="/callback"
                 render={props => {

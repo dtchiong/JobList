@@ -9,6 +9,8 @@ class WelcomePanel extends Component {
 
   render() {
     
+    console.log(window.location.href);
+
     const user = this.props.user;
     //If the user is logged in, we should his name if it's set or his email
     let displayName = "";

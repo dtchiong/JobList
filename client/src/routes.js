@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Route, Router } from "react-router-dom";
 
 import HeaderBar from "./HeaderBar/HeaderBar";
-import WelcomePanel from "./Components/WelcomePanel/WelcomePanel";
 
 import Home from "./Home/Home";
 import Profile from "./Components/Profile/Profile";
@@ -98,7 +97,6 @@ class RoutesContainer extends Component {
         />
         <div className="container">
           <div className="body-top-padding" />
-          <WelcomePanel user={this.state.user} auth={auth} />
           <Router history={history}>
             <div>
               <Route

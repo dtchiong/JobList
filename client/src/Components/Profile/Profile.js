@@ -72,7 +72,7 @@ class Profile extends Component {
 	const states = {
 		success: "ok",
 		error: "remove",
-		null: null
+		null: "null"
 	}
 
 	switch(formId) {
@@ -85,24 +85,15 @@ class Profile extends Component {
 	}
  }
 
- getFormButtonState() {
-	
-	console.log("4Head");
+ getFormButtonState = () => {
 	if (this.state.firstNameValidation === "error" || this.state.lastNameValidation === "error") {
-		console.log("disabled");
-		return "disabled";
+		return true;
 	}
-	console.log("null");
-	return "";
+	return false;
  }
 
-
-
-
-
-
   render() {
-    const email = this.props.user.email;
+    const email = (this.props.user.email? this.props.user.email : "");
     //console.log(this.state);
     return (
       <div>
@@ -134,7 +125,7 @@ class Profile extends Component {
             <ControlLabel>Email Address</ControlLabel>
             <FormControl type="text" value={email} readOnly />
           </FormGroup>
-          <Button type="submit" disabled={this.getFormButtonState} >Submit</Button>
+          <Button type="submit" disabled={this.getFormButtonState()} >Submit</Button>
         </form>
       </div>
     );

@@ -1,12 +1,15 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
+
 import history from "../../history";
 
 class About extends Component {
-    render() {
-        return(
-            <h1>About Page</h1>
-        );
-    }
+  render() {
+    return (
+      <div>
+        <h1>About</h1>
+      </div>
+    );
+  }
 }
 
-export default About
+export default About;

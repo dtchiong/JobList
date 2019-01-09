@@ -7,6 +7,7 @@
 .table {
     border: 0;
     border-collapse: collapse;
+    background-color: white;
 }
 
 /* makes the tbody spread out within the headers instead of constrained within 1 column */

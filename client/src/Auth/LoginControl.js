@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Navbar, Button } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 
 class LoginControl extends Component {
   componentDidMount() {

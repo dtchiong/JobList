@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Grid, Row, Column } from "react-bootstrap";
+import { Grid, Row } from "react-bootstrap";
 
 import WelcomePanel from "../Components/WelcomePanel/WelcomePanel";
 import Table from "../Components/Table/Table";

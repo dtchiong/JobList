@@ -137,6 +137,7 @@ function getAllEntries(user) {
   });
 }
 
+/*
 function checkStatus(res) {
   let obj = { status: res.status, message: null };
   if (res.status >= 200 && res.status < 300) {
@@ -150,6 +151,7 @@ function checkStatus(res) {
   }
   return obj;
 }
+*/
 
 function checkStatus2(response) {
   if (response.status >= 200 && response.status < 300) {

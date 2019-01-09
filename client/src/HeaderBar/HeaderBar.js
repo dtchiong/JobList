@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Nav, Navbar, NavItem, Button } from "react-bootstrap";
+import { Nav, Navbar, NavItem } from "react-bootstrap";
 import LoginControl from "../Auth/LoginControl";
 import history from "../history";
 
@@ -20,6 +20,8 @@ class HeaderBar extends Component {
       case "about":
         history.replace("/about");
         break;
+      default:
+        history.replace("/");
     }
   }
 

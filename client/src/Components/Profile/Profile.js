@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import {FormGroup, ControlLabel, FormControl, Glyphicon, Button} from "react-bootstrap";
-import history from "../../history";
 
 class Profile extends Component {
   constructor(props, context) {
@@ -15,85 +14,119 @@ class Profile extends Component {
     };
   }
 
+  /* Handles the text input onChange, validates the input, and sets the state */
   handleChange(e) {
-    const val = e.target.value;
+	 const val = e.target.value;
+	 const formId = e.target.id;
 
-    switch (e.target.id) {
+    switch (formId) {
       case "formFirstName":
-        this.setState({ firstName: val });
+		  this.setState({ firstName: val });
+		  this.setState({ firstNameValidation: this.validateState(formId, val)});
         break;
       case "formLastName":
-        this.setState({ lastName: val });
-        break;
-    }
-    //console.log(this.state);
-  }
-
-  getValidationState(id, type) {
-    const validation = this.doValidateState(id);
-
-    if (type === "container") {
-      return validation;
-    } else if (type === "glyph") {
-      switch (validation) {
-        case "success":
-          return "ok";
-        case "error":
-          return "remove";
-        case null:
-          return null;
-      }
+		  this.setState({ lastName: val });
+		  this.setState({ lastNameValidation: this.validateState(formId, val)});
+		  break;
+		default:
+			console.log("unimplemented form: "+formId);
     }
   }
 
-  doValidateState(id) {
-    switch (id) {
-      case "formFirstName":
-		  const firstNameLen = this.state.firstName.length;
-		  if (firstNameLen > 50) 
-		    return "error";
-		  else if (firstNameLen > 0)
-			 return "success";
-		  else 
-			 return null;
-			 
-      case "formLastName":
-		  const lastNameLen = this.state.lastName.length;
-		  if (lastNameLen > 50)
-		    return "error";
-		  else if (lastNameLen > 0)
-		    return "success";
-		  else
-		    return null;
-    }
-  }
+  validateState(formId, val) {
+	switch (formId) {
+	  case "formFirstName":
+		 const firstNameLen = val.length;
+		 if (firstNameLen > 50) 
+			return "error";
+		 else if (firstNameLen > 0)
+			return "success";
+		 else 
+			return null;
+			
+	  case "formLastName":
+		 const lastNameLen = val.length;
+		 if (lastNameLen > 50)
+			return "error";
+		 else if (lastNameLen > 0)
+			return "success";
+		 else
+      return null;
+    default:
+      return null;
+	}
+ }
+
+ getValidationState(formId) {
+   switch(formId) {
+		case "formFirstName":
+			return this.state.firstNameValidation;
+		case "formLastName":
+			return this.state.lastNameValidation;
+		default:
+			return null;
+	}
+ }
+
+ getGlyphState(formId) {
+	const states = {
+		success: "ok",
+		error: "remove",
+		null: null
+	}
+
+	switch(formId) {
+		case "formFirstName":
+			return states[this.state.firstNameValidation];
+		case "formLastName":
+			return states[this.state.lastNameValidation];
+		default:
+			return null;
+	}
+ }
+
+ getFormButtonState() {
+	
+	console.log("4Head");
+	if (this.state.firstNameValidation === "error" || this.state.lastNameValidation === "error") {
+		console.log("disabled");
+		return "disabled";
+	}
+	console.log("null");
+	return "";
+ }
+
+
+
+
+
 
   render() {
     const email = this.props.user.email;
-
+    //console.log(this.state);
     return (
       <div>
         <h1>Profile</h1>
         <form>
           <FormGroup
             controlId="formFirstName"
-            validationState={this.getValidationState("formFirstName","container")}
+            validationState={this.getValidationState("formFirstName")}
           >
             <ControlLabel>First Name</ControlLabel>
             <FormControl type="text" onChange={this.handleChange} />
             <FormControl.Feedback>
-              <Glyphicon glyph={this.getValidationState("formFirstName", "glyph")}/>
+              <Glyphicon glyph={this.getGlyphState("formFirstName")}/>
             </FormControl.Feedback>
           </FormGroup>
 
           <FormGroup
             controlId="formLastName"
-            validationState={this.getValidationState("formLastName", "container")}
+            validationState={this.getValidationState("formLastName")}
           >
             <ControlLabel>Last Name</ControlLabel>
             <FormControl type="text" onChange={this.handleChange} />
             <FormControl.Feedback>
-              <Glyphicon glyph={this.getValidationState("formLastName", "glyph")}/>
+              <Glyphicon glyph={this.getGlyphState("formLastName")}/>
             </FormControl.Feedback>
           </FormGroup>
 
@@ -101,7 +134,7 @@ class Profile extends Component {
             <ControlLabel>Email Address</ControlLabel>
             <FormControl type="text" value={email} readOnly />
           </FormGroup>
-          <Button type="submit" disabled="" >Submit</Button>
+          <Button type="submit" disabled={this.getFormButtonState} >Submit</Button>
         </form>
       </div>
     );

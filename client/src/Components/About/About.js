@@ -28,16 +28,14 @@ class About extends Component {
                   meant that I was mainly developing a page for one of the
                   site's many features, but I didn't understand well how the
                   backend worked, especially, the page routing and user
-                  authorization. Even after reading through the back-end code,
-                  it was hard to fully understand what every line in the code
-                  doing, especially since I was new to javascript. I believe
-                  that the only way to fully understand something new, in this
-                  case--setting up user authorization, developing the api,
-                  configuring express for the backend, and setting up routing
-                  between the pages--is to implement it yourself. So that's why
-                  I made this website. As for why I chose React, I wanted to
-                  learn a front-end framework or library, and this one seems to
-                  be the most popular one due to its use of reusable components.
+                  authorization. I believe that the only way to fully understand
+                  something new, in this case--setting up user authorization,
+                  developing the api, configuring express for the backend, and
+                  setting up routing between the pages--is to implement it
+                  yourself. So that's why I made this website. As for why I
+                  chose React, I wanted to learn a front-end framework/library,
+                  and this one seems to be the most popular one due to its use
+                  of reusable components.
                 </p>
                 <Panel.Title> Technologies Used</Panel.Title>
                 <ul>

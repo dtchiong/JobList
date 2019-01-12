@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, Router } from "react-router-dom";
+import { Route, Router, Switch } from "react-router-dom";
 
 import HeaderBar from "./HeaderBar/HeaderBar";
 
@@ -7,6 +7,7 @@ import Home from "./Home/Home";
 import Profile from "./Components/Profile/Profile";
 import About from "./Components/About/About";
 import Callback from "./Callback/Callback";
+import EmptyRoute from "./Components/EmptyRoute/EmptyRoute";
 
 import Auth from "./Auth/Auth";
 import history from "./history";
@@ -98,51 +99,54 @@ class RoutesContainer extends Component {
         <div className="container">
           <div className="body-top-padding" />
           <Router history={history}>
-            <div>
-              <Route
-                exact
-                path="(/|/home)"
-                render={props => (
-                  <Home
-                    auth={auth}
-                    user={this.state.user}
-                    requests={Requests}
-                    {...props}
-                  />
-                )}
-              />
-              <Route
-                exact
-                path="/profile"
-                render={props => (
-                  <Profile
-                    auth={auth}
-                    user={this.state.user}
-                    requests={Requests}
-                    {...props}
-                  />
-                )}
-              />
-              <Route
-                exact
-                path="/about"
-                render={props => (
-                  <About
-                    auth={auth}
-                    user={this.state.user}
-                    requests={Requests}
-                    {...props}
-                  />
-                )}
-              />
-              <Route
-                path="/callback"
-                render={props => {
-                  this.handleAuthentication(props);
-                  return <Callback {...props} />;
-                }}
-              />
-            </div>
+            <Switch>
+
+                <Route
+                  exact
+                  path="(/|/home)"
+                  render={props => (
+                    <Home
+                      auth={auth}
+                      user={this.state.user}
+                      requests={Requests}
+                      {...props}
+                    />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/profile"
+                  render={props => (
+                    <Profile
+                      auth={auth}
+                      user={this.state.user}
+                      requests={Requests}
+                      {...props}
+                    />
+                  )}
+                />
+                <Route
+                  exact
+                  path="/about"
+                  render={props => (
+                    <About
+                      auth={auth}
+                      user={this.state.user}
+                      requests={Requests}
+                      {...props}
+                    />
+                  )}
+                />
+                <Route
+                  path="/callback"
+                  render={props => {
+                    this.handleAuthentication(props);
+                    return <Callback {...props} />;
+                  }}
+                />
+                <Route path="/*" render={props => <EmptyRoute />} />
+
+            </Switch>
           </Router>
         </div>
       </div>

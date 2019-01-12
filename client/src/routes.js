@@ -100,7 +100,6 @@ class RoutesContainer extends Component {
           <div className="body-top-padding" />
           <Router history={history}>
             <Switch>
-
                 <Route
                   exact
                   path="(/|/home)"
@@ -145,7 +144,6 @@ class RoutesContainer extends Component {
                   }}
                 />
                 <Route path="/*" render={props => <EmptyRoute />} />
-
             </Switch>
           </Router>
         </div>

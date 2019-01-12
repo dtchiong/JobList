@@ -93,7 +93,7 @@ class Profile extends Component {
   }
 
   /* Disables or enables the form's submit button depending on the form's validation */
-  getFormButtonState = () => {
+  buttonIsDisabled = () => {
     if (
       this.state.firstNameValidation === "error" ||
       this.state.lastNameValidation === "error"
@@ -102,6 +102,25 @@ class Profile extends Component {
     }
     return false;
   };
+
+  submitForm = () => {
+
+    if (this.buttonIsDisabled()) {
+      console.log("returning: button is disabled");
+      return;
+    }else if (this.props.user.userId == null) {
+      console.log("returning: userId is null");
+    }
+
+    console.log("updating user");
+    const user = {
+      userId: this.props.user.userId,
+      firstName: this.state.firstName,
+      lastName: this.state.lastName
+    }
+
+    this.props.requests.updateUser(user);
+  }
 
   render() {
     const email = this.props.user.email ? this.props.user.email : "";
@@ -143,8 +162,9 @@ class Profile extends Component {
                   </FormGroup>
                   <Button
                     bsSize="large"
-                    type="submit"
-                    disabled={this.getFormButtonState()}
+                    
+                    disabled={this.buttonIsDisabled()}
+                    onClick={this.submitForm}
                   >
                     Submit
                   </Button>

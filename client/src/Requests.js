@@ -4,11 +4,14 @@
 
 /* Checks if the user with userId exists in the DB, if not, then it's inserted */
 async function insertUserIfNew(user) {
-  const exists = await userExists(user.userId);
-  console.log("user exists: " + exists);
-  if (!exists) {
+  const fetchedUser = await userExists(user.userId);
+  if (fetchedUser == null) {
+    console.log("user doesn't exist: inserting");
     insertUser(user.userId);
+    return;
   }
+  //console.log(fetchedUser[0].user_id);
+  console.log("user exists");
 }
 
 /* Calls a fetch request to check if the user with userId exists in the DB 
@@ -28,9 +31,9 @@ function userExists(userId) {
     .then(parseJSON)
     .then(res => {
       if (res.users.length > 0) {
-        return true;
+        return res.users;
       } else if (res.users.length === 0) {
-        return false;
+        return null;
       }
     });
 }
@@ -168,5 +171,5 @@ function parseJSON(response) {
   return response.json();
 }
 
-const BackendRequests = { insertUserIfNew, updateUser, insertEntry, updateEntry, deleteEntry, getAllEntries };
+const BackendRequests = { insertUserIfNew, userExists, updateUser, insertEntry, updateEntry, deleteEntry, getAllEntries };
 export default BackendRequests;

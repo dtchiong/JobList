@@ -20,7 +20,9 @@ class Profile extends Component {
       firstName: "",
       lastName: "",
       firstNameValidation: null,
-      lastNameValidation: null
+      lastNameValidation: null,
+      firstNameChanged: false,
+      lastNameChanged: false,
     };
   }
 
@@ -33,10 +35,12 @@ class Profile extends Component {
       case "formFirstName":
         this.setState({ firstName: val });
         this.setState({ firstNameValidation: this.validateState(formId, val) });
+        this.setState({ firstNameChanged: true});
         break;
       case "formLastName":
         this.setState({ lastName: val });
         this.setState({ lastNameValidation: this.validateState(formId, val) });
+        this.setState({ lastNameChanged: true});
         break;
       default:
         console.log("unimplemented form: " + formId);
@@ -103,6 +107,7 @@ class Profile extends Component {
     return false;
   };
 
+  /* Updates the name from the form and sets the state in routes.js */
   submitForm = () => {
 
     if (this.buttonIsDisabled()) {
@@ -120,11 +125,28 @@ class Profile extends Component {
     }
 
     this.props.requests.updateUser(user);
+    this.props.setNames(this.state.firstName, this.state.lastName); //need to validate request before setting the name
+  }
+
+  /* Returns the saved name if the form has not been changed, else it returns the modified input */ 
+  getFirstName = () => {
+    if (this.state.firstNameChanged) {
+      return this.state.firstName;
+    }
+    const firstName = this.props.user.firstName;
+    return (firstName? firstName : "");
+  }
+
+  getLastName = () => {
+    if (this.state.lastNameChanged) {
+      return this.state.lastName;
+    }
+    const lastName = this.props.user.lastName;
+    return (lastName? lastName : "");
   }
 
   render() {
     const email = this.props.user.email ? this.props.user.email : "";
-    //console.log(this.state);
     return (
       <div>
         <h1>Profile</h1>
@@ -139,7 +161,7 @@ class Profile extends Component {
                     validationState={this.getValidationState("formFirstName")}
                   >
                     <ControlLabel>First Name</ControlLabel>
-                    <FormControl type="text" onChange={this.handleChange} />
+                    <FormControl type="text" value={this.getFirstName()} onChange={this.handleChange} />
                     <FormControl.Feedback>
                       <Glyphicon glyph={this.getGlyphState("formFirstName")} />
                     </FormControl.Feedback>
@@ -150,7 +172,7 @@ class Profile extends Component {
                     validationState={this.getValidationState("formLastName")}
                   >
                     <ControlLabel>Last Name</ControlLabel>
-                    <FormControl type="text" onChange={this.handleChange} />
+                    <FormControl type="text" value={this.getLastName()} onChange={this.handleChange} />
                     <FormControl.Feedback>
                       <Glyphicon glyph={this.getGlyphState("formLastName")} />
                     </FormControl.Feedback>

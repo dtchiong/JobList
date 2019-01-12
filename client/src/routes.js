@@ -18,7 +18,9 @@ import "./routes.css";
 const auth = new Auth();
 
 class RoutesContainer extends Component {
-  /* This gets the userId from the access token when the user is logged in and refreshes the page */
+  /* This gets the userId from the access token when the user is logged in and refreshes the page.
+   * This is called only once immediately after the initial rendering
+   */
   componentDidMount() {
     auth.getUserProfile(this.setUserProfile);
   }
@@ -61,12 +63,30 @@ class RoutesContainer extends Component {
   doSetUserProfile = user => {
     const newUser = {
       userId: user.sub,
-      firstName: null,
-      lastName: null,
+      firstName: this.state.user.firstName, //the first and last name are set the current states' because we 
+      lastName: this.state.user.lastName,   //don't want to change the value and need to let setFirstAndLastName() set the values
       email: user.email,
       emailVerified: user.email_verified
     };
     this.setState({ user: newUser });
+    this.setFirstAndLastName(user.sub);
+  };
+
+  setFirstAndLastName = async (userId) => {
+    const user = (await Requests.userExists(userId))[0]; //userExists returns a list of users, so we select the 1st one
+    this.doSetFirstAndLastName(user.first_name, user.last_name);
+  };
+
+  /* Passed to the Profile route to set user info */
+  doSetFirstAndLastName = (firstName, lastName) => {
+    const newUser = {
+      userId: this.state.user.userId,
+      firstName: firstName,
+      lastName: lastName,
+      email: this.state.user.email,
+      emailVerified: this.state.user.emailVerified
+    }
+    this.setState({user: newUser});
   };
 
   /* Passed as prop to LoginControl to be used when logging out */
@@ -75,7 +95,8 @@ class RoutesContainer extends Component {
       userId: null,
       firstName: null,
       lastName: null,
-      email: null
+      email: null,
+      emailVerified: null
     };
     this.setState({ user: nullUser });
   };
@@ -120,6 +141,7 @@ class RoutesContainer extends Component {
                       auth={auth}
                       user={this.state.user}
                       requests={Requests}
+                      setNames={this.doSetFirstAndLastName}
                       {...props}
                     />
                   )}

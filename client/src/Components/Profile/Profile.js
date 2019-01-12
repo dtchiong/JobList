@@ -111,21 +111,28 @@ class Profile extends Component {
   submitForm = () => {
 
     if (this.buttonIsDisabled()) {
-      console.log("returning: button is disabled");
       return;
     }else if (this.props.user.userId == null) {
-      console.log("returning: userId is null");
+      return;
+    }else if (!this.state.firstNameChanged && !this.state.lastNameChanged) {
+      return
+    }else if (this.state.firstName === this.props.user.firstName && 
+              this.state.lastName === this.props.user.lastName) {
+      return;            
     }
+
+    const firstName = (this.state.firstNameChanged? this.state.firstName : this.props.user.firstName);
+    const lastName = (this.state.lastNameChanged? this.state.lastName : this.props.user.lastName);
 
     console.log("updating user");
     const user = {
       userId: this.props.user.userId,
-      firstName: this.state.firstName,
-      lastName: this.state.lastName
+      firstName: firstName,
+      lastName: lastName
     }
 
     this.props.requests.updateUser(user);
-    this.props.setNames(this.state.firstName, this.state.lastName); //need to validate request before setting the name
+    this.props.setNames(firstName, lastName); //need to validate request before setting the name
   }
 
   /* Returns the saved name if the form has not been changed, else it returns the modified input */ 

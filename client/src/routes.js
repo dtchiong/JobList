@@ -6,12 +6,12 @@ import HeaderBar from "./Components/HeaderBar/HeaderBar";
 import Home from "./Components/Home/Home";
 import Profile from "./Components/Profile/Profile";
 import About from "./Components/About/About";
-import Callback from "./Callback/Callback";
+import Callback from "./Components/Callback/Callback";
 import EmptyRoute from "./Components/EmptyRoute/EmptyRoute";
 
 import Auth from "./Auth/Auth";
-import history from "./history";
-import Requests from "./Requests";
+import history from "./Utility/history";
+import Requests from "./Utility/Requests";
 
 import "./routes.css";
 

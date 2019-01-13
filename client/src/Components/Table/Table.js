@@ -2,7 +2,7 @@ import React, { Component } from "react";
 //mport {Button} from "react-bootstrap";
 import { Table } from "react-bootstrap";
 import "./table.css";
-import history from "../../history";
+import history from "../../Utility/history";
 
 class myTable extends Component {
   columns = [

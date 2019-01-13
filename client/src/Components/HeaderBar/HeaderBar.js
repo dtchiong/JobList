@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Nav, Navbar, NavItem } from "react-bootstrap";
 import LoginControl from "../../Auth/LoginControl";
-import history from "../../history";
+import history from "../../Utility/history";
 
 class HeaderBar extends Component {
 

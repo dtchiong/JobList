@@ -61,7 +61,9 @@ function insertUser(userId) {
     });
 }
 
-/* Calls a fetch post to update the user's information in the DB */
+/* Calls a fetch post to update the user's information in the DB 
+ * returns true on successful update, false otherwise 
+ */
 function updateUser(user) {
   let data = {
     userId: user.userId,
@@ -74,6 +76,13 @@ function updateUser(user) {
     body: JSON.stringify(data),
     headers: {
       "Content-Type": "application/json"
+    }
+  }).then( (res)=> {
+    try {
+      checkStatus2(res);
+      return true;
+    }catch(err) {
+      return false;
     }
   });
 }

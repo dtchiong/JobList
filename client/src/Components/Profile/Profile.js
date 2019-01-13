@@ -124,15 +124,19 @@ class Profile extends Component {
     const firstName = (this.state.firstNameChanged? this.state.firstName : this.props.user.firstName);
     const lastName = (this.state.lastNameChanged? this.state.lastName : this.props.user.lastName);
 
-    console.log("updating user");
+    
     const user = {
       userId: this.props.user.userId,
       firstName: firstName,
       lastName: lastName
     }
 
-    this.props.requests.updateUser(user);
-    this.props.setNames(firstName, lastName); //need to validate request before setting the name
+    //Only update the user info if the request is succesful
+    this.props.requests.updateUser(user).then((success)=>{
+      if (success) {
+        this.props.setNames(firstName, lastName);
+      }
+    });
   }
 
   /* Returns the saved name if the form has not been changed, else it returns the modified input */ 

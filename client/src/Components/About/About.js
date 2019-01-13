@@ -46,7 +46,7 @@ class About extends Component {
                   <li>Auth0</li>
                   <li>Heroku</li>
                 </ul>
-                <Panel.Title>Struggles</Panel.Title>
+                <Panel.Title>Problems Encountered</Panel.Title>
                 <p>There were a lot of struggles(elaborate later).</p>
               </Panel.Body>
             </Col>

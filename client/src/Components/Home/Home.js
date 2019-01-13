@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Grid, Row } from "react-bootstrap";
 
-import WelcomePanel from "../Components/WelcomePanel/WelcomePanel";
-import Table from "../Components/Table/Table";
+import WelcomePanel from "../WelcomePanel/WelcomePanel";
+import Table from "../Table/Table";
 
 class Home extends Component {
   render() {

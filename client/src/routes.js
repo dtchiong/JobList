@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Route, Router, Switch } from "react-router-dom";
 
-import HeaderBar from "./HeaderBar/HeaderBar";
+import HeaderBar from "./Components/HeaderBar/HeaderBar";
 
-import Home from "./Home/Home";
+import Home from "./Components/Home/Home";
 import Profile from "./Components/Profile/Profile";
 import About from "./Components/About/About";
 import Callback from "./Callback/Callback";

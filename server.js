@@ -20,7 +20,7 @@ app.listen(app.get("port"), () => {
 
 //Express only serves static assets in production
 //Since procoess.env.DATABASE_URL isn't usage in dev,
-//We use the static connetion string to connect to the DB if not on production
+//We use the static connection string to connect to the DB if not on production
 if (process.env.NODE_ENV === "production") {
   console.log("In Production");
 } else {
@@ -45,16 +45,18 @@ const queryUpdateUserProfile = `UPDATE users
                                 WHERE user_id = $1 RETURNING *`;
 
 const queryInsertEntry = `INSERT INTO lists 
-                          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *`;
+                          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`;
 
 const queryUpdateEntry = `UPDATE lists
-                          SET company_name = $4, job_title = $5, website = $6, area = $7,
-                              apply_method = $8, apply_date = $9, got_response = $10,
-                              app_status = $11, interview_date = $12, notes = $13
-                          WHERE user_id = $1 AND company_name = $2 AND job_title = $3 RETURNING *`;
+                          SET company_name = $5, job_title = $6, city = $7,
+                          website = $8, apply_date = $9, app_status = $10,
+                          interview_date = $11, notes = $12
+                          WHERE user_id = $1 AND company_name = $2 AND job_title = $3 AND city = $4 
+                          RETURNING *`;
 
 const queryDeleteEntry = `DELETE FROM lists 
-                          WHERE user_id = $1 AND company_name = $2 AND job_title = $3 RETURNING *`;
+                          WHERE user_id = $1 AND company_name = $2 AND job_title = $3 AND city = $4
+                          RETURNING *`;
 
 const queryGetAllEntries = "SELECT * FROM users WHERE user_id = $1";
 
@@ -147,11 +149,9 @@ app.post("/api/user/entry/insert", async (req, res) => {
     body.userId,
     body.entry.companyName,
     body.entry.jobTitle,
+    body.entry.city,
     body.entry.website,
-    body.entry.area,
-    body.entry.applyMethod,
     body.entry.applyDate,
-    body.entry.gotResponse,
     body.entry.appStatus,
     body.entry.interviewDate,
     body.entry.notes
@@ -186,13 +186,12 @@ app.post("/api/user/entry/update", async (req, res) => {
     body.userId,
     body.oldEntry.companyName,
     body.oldEntry.jobTitle,
+    body.oldEntry.city,
     body.entry.companyName,
     body.entry.jobTitle,
+    body.entry.city,
     body.entry.website,
-    body.entry.area,
-    body.entry.applyMethod,
     body.entry.applyDate,
-    body.entry.gotResponse,
     body.entry.appStatus,
     body.entry.interviewDate,
     body.entry.notes
@@ -222,7 +221,12 @@ app.post("/api/user/entry/update", async (req, res) => {
 
 /* Deletes an entry from a user's list in the DB. */
 app.post("/api/user/entry/delete", async (req, res) => {
-  let values = [req.body.userId, req.body.entry.companyName, req.body.entry.jobTitle];
+  let values = [
+    req.body.userId,
+    req.body.entry.companyName,
+    req.body.entry.jobTitle,
+    req.body.entry.city
+  ];
 
   try {
     const result = await client.query(queryDeleteEntry, values);

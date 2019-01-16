@@ -8,10 +8,9 @@ class myTable extends Component {
   columns = [
     "Company Name",
     "Job Title",
-    "Website",
     "City",
+    "Website",
     "Apply Date",
-    "Got Response",
     "App Status",
     "Interview Date",
     "Notes"

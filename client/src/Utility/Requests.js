@@ -146,6 +146,13 @@ function getAllEntries(user) {
     headers: {
       "Content-Type": "application/json"
     }
+  }).then( (res) => {
+    try {
+      checkStatus2(res);
+      return parseJSON(res);
+    }catch(err) {
+      return null;
+    }
   });
 }
 

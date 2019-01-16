@@ -58,7 +58,7 @@ const queryDeleteEntry = `DELETE FROM lists
                           WHERE user_id = $1 AND company_name = $2 AND job_title = $3 AND city = $4
                           RETURNING *`;
 
-const queryGetAllEntries = "SELECT * FROM users WHERE user_id = $1";
+const queryGetAllEntries = 'SELECT * FROM lists WHERE user_id = $1';
 
 /* Returns the user's information if exists */
 app.post("/api/user/exists", async (req, res) => {
@@ -264,7 +264,7 @@ app.post("/api/user/entry/getAll", async (req, res) => {
         entries.push(row);
       });
       ret.entries = entries;
-      ret.count = entries.count;
+      ret.count = entries.length;
     }
     res.json(ret);
   } catch (err) {

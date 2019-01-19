@@ -10,14 +10,19 @@ class HeaderBar extends Component {
    * navigating between home, profile, and about, as opposed to history.push
    */
   handleSelectedPage = key => {
+    //ensures that the page is only re-rendered when switching routes
+    if (key === window.location.pathname) {
+      return;
+    }
+
     switch(key) {
-      case "home":
+      case "/home":
         history.replace("/home");
         break;
-      case "profile":
+      case "/profile":
         history.replace("/profile");
         break;
-      case "about":
+      case "/about":
         history.replace("/about");
         break;
       default:
@@ -53,13 +58,13 @@ class HeaderBar extends Component {
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav className="tab-link" style={navLinkStyle} onSelect={key=>this.handleSelectedPage(key)}>
-              <NavItem eventKey={"home"} >
+              <NavItem eventKey={"/home"} >
                 Home
               </NavItem>
-              <NavItem  eventKey={"profile"} >
+              <NavItem  eventKey={"/profile"} >
                 Profile
               </NavItem>
-              <NavItem eventKey={"about"} > 
+              <NavItem eventKey={"/about"} > 
                 About
               </NavItem>
             </Nav>

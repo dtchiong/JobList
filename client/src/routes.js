@@ -102,7 +102,7 @@ class RoutesContainer extends Component {
   };
 
   render() {
-    console.log("render(): " + JSON.stringify(this.state, null, 4));
+    //console.log("render(): " + JSON.stringify(this.state, null, 4));
 
     return (
       //NOTE: the "container" classname is from bootstrap and makes our content centered instead of using 100% width

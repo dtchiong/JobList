@@ -6,23 +6,57 @@ import Table from "../Table/Table";
 
 class Home extends Component {
 
-  componentDidMount() {
-    console.log("Component did mount");
-    const user = this.props.user;
-    if (this.props.requests != null) {
-      console.log("USERID: "+this.props.user.userId);
-      (this.props.requests.getAllEntries(user)).then( (res)=>{
-        console.log(res);
-      } )
+  constructor(props, context) {
+    
+    super(props, context);
+    
+    this.state = {
+      calledDataFetch: false,
+      list: null
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log("NEXT PROPS " + nextProps.user.userId); //start request to get All Entries here
+  /* Only called once in the initial app loading
+  * If the user isn't null, then we set the calledDataFetch to true to trigger
+  * componentDidUpdate() to fetch our data
+  */
+  componentDidMount() {
+    if (this.props.user.userId != null) {
+      this.setState( {calledDataFetch: true} );
+    }
+  }
+
+  /* Fetches the user's list if the user is not null and sets the state */
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const user = this.props.user;
+
+    if (user.userId != null ) {//&& !this.state.calledDataFetch
+
+     console.log("prevState list: "+prevState.list);
+     if (prevState.list != null) {
+       return;
+     }
+      
+      console.log("ID: "+ user.userId);
+      this.props.requests.getAllEntries(user).then( (res)=>{
+        console.log(res);
+        this.setState( {list: res.entries, calledDataFetch:true});
+        //this.setState( {calledDataFetch: true});
+      } );  
+    }
+  }
+
+  //Not sure if needed
+  shouldComponentUpdate() {
+    if (this.state.list != null) {
+      return false;
+    }
+    return true;
   }
 
   render() {
-    console.log("Home render()");
+
+    console.log("Home render() list: "+this.state.list);
     return (
       <div>
         <Grid>

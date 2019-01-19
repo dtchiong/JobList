@@ -11,7 +11,7 @@ async function insertUserIfNew(user) {
     return;
   }
   //console.log(fetchedUser[0].user_id);
-  console.log("user exists");
+  //console.log("user exists");
 }
 
 /* Calls a fetch request to check if the user with userId exists in the DB 

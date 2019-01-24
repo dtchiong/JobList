@@ -13,18 +13,17 @@ class Home extends Component {
     super(props, context);
     
     this.state = {
-      calledDataFetch: false,
       list: null
     }
   }
 
   /* Only called once in the initial app loading
-  * If the user isn't null, then we set the calledDataFetch to true to trigger
-  * componentDidUpdate() to fetch our data
+  * If the user isn't null, then we call componentDidUpdate() to fetch our data
+  * Maybe refactor data fetching logic out of componentDidUpdate into a function
   */
   componentDidMount() {
     if (this.props.user.userId != null) {
-      this.setState( {calledDataFetch: true} );
+      this.componentDidUpdate(null, this.state);
     }
   }
 
@@ -32,18 +31,15 @@ class Home extends Component {
   componentDidUpdate(prevProps, prevState, snapshot) {
     const user = this.props.user;
 
-    if (user.userId != null ) {//&& !this.state.calledDataFetch
+    if (user.userId != null ) {
 
-     console.log("prevState list: "+prevState.list);
      if (prevState.list != null) {
        return;
      }
       
-      //console.log("ID: "+ user.userId);
       this.props.requests.getAllEntries(user).then( (res)=>{
         console.log(res);
-        this.setState( {list: res.entries, calledDataFetch:true});
-        //this.setState( {calledDataFetch: true});
+        this.setState( {list: res.entries});
       } );  
     }
   }

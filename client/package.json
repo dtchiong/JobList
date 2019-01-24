@@ -12,6 +12,7 @@
     "auth0-js": "^9.9.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "bootstrap": "^4.2.1",
+    "deep-equal": "^1.0.1",
     "react": "^16.7.0",
     "react-bootstrap": "^0.32.4",
     "react-dom": "^16.7.0",

@@ -11,9 +11,7 @@
     "fs": "0.0.2",
     "history": "^4.7.2",
     "pg": "^7.8.0",
-    "react": "^16.7.0",
-    "react-bootstrap": "^0.32.4",
-    "react-dom": "^16.7.0"
+    "react-bootstrap": "^0.32.4"
   },
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run client\"",

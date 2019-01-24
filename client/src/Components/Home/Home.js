@@ -4,6 +4,8 @@ import { Grid, Row, Panel } from "react-bootstrap";
 import WelcomePanel from "../WelcomePanel/WelcomePanel";
 import Table from "../Table/Table";
 
+var deepEqual = require('deep-equal');
+
 class Home extends Component {
 
   constructor(props, context) {
@@ -37,7 +39,7 @@ class Home extends Component {
        return;
      }
       
-      console.log("ID: "+ user.userId);
+      //console.log("ID: "+ user.userId);
       this.props.requests.getAllEntries(user).then( (res)=>{
         console.log(res);
         this.setState( {list: res.entries, calledDataFetch:true});
@@ -46,16 +48,19 @@ class Home extends Component {
     }
   }
 
-  //Not sure if needed
-  shouldComponentUpdate() {
-    if (this.state.list != null) {
+  /* Compares the old state to the new state and only re-renders using a deepEqual
+   * and only re-renders if the states are different - to minimize renders
+   */
+  shouldComponentUpdate(nextProps, nextState) {
+    const sameUserProps = deepEqual(nextProps.user, this.props.user);
+    const sameState = deepEqual(nextState, this.state);
+    if (sameUserProps && sameState) {
       return false;
     }
     return true;
   }
 
   render() {
-
     console.log("Home render() list: "+this.state.list);
     return (
       <div>

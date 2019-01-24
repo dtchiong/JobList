@@ -33,14 +33,10 @@ class Profile extends Component {
 
     switch (formId) {
       case "formFirstName":
-        this.setState({ firstName: val });
-        this.setState({ firstNameValidation: this.validateState(formId, val) });
-        this.setState({ firstNameChanged: true});
+        this.setState({ firstName: val, firstNameValidation: this.validateState(formId, val), firstNameChanged: true });
         break;
       case "formLastName":
-        this.setState({ lastName: val });
-        this.setState({ lastNameValidation: this.validateState(formId, val) });
-        this.setState({ lastNameChanged: true});
+        this.setState({ lastName: val, lastNameValidation: this.validateState(formId, val), lastNameChanged: true });
         break;
       default:
         console.log("unimplemented form: " + formId);
